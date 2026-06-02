@@ -29,7 +29,7 @@ export function DemoAdminNav() {
             Inicio
           </Link>
           <a href={catalog} target="_blank" rel="noreferrer" className="text-[#f2f2f2] hover:text-white">
-            Catálogo web
+            Ver sitio público
           </a>
           <span className="hidden text-[#9c9c9c] sm:inline">Admin FUZZ</span>
           <span className="btn-fuzz-outline pointer-events-none text-xs opacity-70">Salir</span>
