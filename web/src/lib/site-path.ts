@@ -13,3 +13,14 @@ export function withBasePath(path: string) {
   if (!path.startsWith("/")) return `${base}/${path}`;
   return `${base}${path}`;
 }
+
+/** Rutas para `<Link>`: Next ya aplica `basePath` del config; no duplicar prefijo. */
+export function appPath(path: string) {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  const base = getBasePath();
+  if (base && normalized.startsWith(base)) {
+    const rest = normalized.slice(base.length);
+    return rest || "/";
+  }
+  return normalized;
+}

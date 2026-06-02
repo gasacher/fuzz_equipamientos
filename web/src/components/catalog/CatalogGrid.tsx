@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { getInstrumentImage, isExternalImage } from "@/lib/catalog-images";
 import { formatCatalogPrice } from "@/lib/format-price";
-import { withBasePath } from "@/lib/site-path";
+import { appPath } from "@/lib/site-path";
 
 export type CatalogItem = {
   id: string;
@@ -34,7 +34,7 @@ function CatalogImage({ src, alt }: { src: string; alt: string }) {
   return <Image src={src} alt={alt} fill className="object-cover" sizes="(max-width:768px) 50vw, 25vw" />;
 }
 
-export function CatalogGrid({ items, basePath = withBasePath("/equipo") }: Props) {
+export function CatalogGrid({ items, basePath = appPath("/equipo") }: Props) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
   const [marca, setMarca] = useState("");

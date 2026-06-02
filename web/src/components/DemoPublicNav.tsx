@@ -1,15 +1,15 @@
 import Link from "next/link";
 import { FuzzLogo } from "@/components/FuzzLogo";
 import { buildWhatsAppConsultUrl } from "@/lib/fuzz";
-import { isStaticCatalogSite, withBasePath } from "@/lib/site-path";
+import { appPath, isStaticCatalogSite } from "@/lib/site-path";
 
 type Props = {
   active: "catalog" | "panel";
 };
 
 export function DemoPublicNav({ active }: Props) {
-  const catalogHref = withBasePath("/");
-  const panelHref = withBasePath("/panel/");
+  const catalogHref = appPath("/");
+  const panelHref = appPath("/panel/");
 
   return (
     <nav className="border-b border-white/10 bg-black">
