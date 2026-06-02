@@ -4,6 +4,7 @@
 # next.js
 /.next/
 /out/
+/out/.git
 
 # base de datos local
 /dev.db
