@@ -1,11 +1,15 @@
 import { execSync } from "node:child_process";
-import { mkdir, rename, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const stashDir = path.join(root, ".gh-pages-stash");
 const disabled = [];
+
+const equipoPage = path.join(root, "src/app/(catalog)/equipo/page.tsx");
+const equipoStatic = path.join(root, "src/app/(catalog)/equipo/page.static.tsx");
+const equipoBackup = path.join(stashDir, "equipo-page.tsx.bak");
 
 async function disable(...relPaths) {
   await mkdir(stashDir, { recursive: true });
@@ -23,6 +27,10 @@ async function restore() {
   }
 }
 
+await mkdir(stashDir, { recursive: true });
+await copyFile(equipoPage, equipoBackup);
+await copyFile(equipoStatic, equipoPage);
+
 await disable("src/app/admin", "src/app/login", "src/app/api", "src/middleware.ts");
 
 try {
@@ -38,5 +46,6 @@ try {
 
   await writeFile(path.join(root, "out", ".nojekyll"), "");
 } finally {
+  await copyFile(equipoBackup, equipoPage);
   await restore();
 }

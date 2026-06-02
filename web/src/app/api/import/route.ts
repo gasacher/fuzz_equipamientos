@@ -10,7 +10,8 @@ export async function POST() {
   if (!session) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   try {
-    const excelPath = path.resolve(process.cwd(), "../FUZZEQUIPAMIENTOS - ADMIN.xlsx");
+    const excelPath =
+      process.env.EXCEL_PATH ?? path.resolve(process.cwd(), "../FUZZEQUIPAMIENTOS - ADMIN.xlsx");
     const result = await importFullExcel(prisma, excelPath);
     revalidateClientCatalog();
     return NextResponse.json({

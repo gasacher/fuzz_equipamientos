@@ -1,18 +1,29 @@
-"use client";
-
 import Link from "next/link";
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import { CatalogProduct } from "@/components/catalog/CatalogProduct";
-import catalogData from "@/data/catalog.json";
+import { fetchCatalogProduct } from "@/lib/catalog-store";
 import { withBasePath } from "@/lib/site-path";
 
-function ProductContent() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  const product = id ? catalogData.items.find((item) => item.id === id) : null;
+type Props = {
+  searchParams: Promise<{ id?: string }>;
+};
 
-  if (!id || !product) {
+export default async function EquipoPage({ searchParams }: Props) {
+  const { id } = await searchParams;
+
+  if (!id) {
+    return (
+      <div className="fuzz-card space-y-4 p-8 text-center">
+        <p className="text-[#9c9c9c]">Producto no encontrado.</p>
+        <Link href={withBasePath("/")} className="text-[#e50914] hover:underline">
+          Volver al catálogo
+        </Link>
+      </div>
+    );
+  }
+
+  const product = await fetchCatalogProduct(id);
+
+  if (!product) {
     return (
       <div className="fuzz-card space-y-4 p-8 text-center">
         <p className="text-[#9c9c9c]">Producto no encontrado.</p>
@@ -24,12 +35,4 @@ function ProductContent() {
   }
 
   return <CatalogProduct product={product} catalogBasePath={withBasePath("/")} />;
-}
-
-export default function EquipoPage() {
-  return (
-    <Suspense fallback={<p className="text-center text-[#9c9c9c]">Cargando…</p>}>
-      <ProductContent />
-    </Suspense>
-  );
 }

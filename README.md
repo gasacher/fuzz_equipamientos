@@ -2,6 +2,10 @@
 
 Catálogo web público + panel admin (stock, ventas, importación Excel).
 
+## App completa en internet (login + admin)
+
+GitHub Pages **no** puede correr login ni base de datos. Para publicar todo como en local: [docs/DEPLOY-COMPLETO.md](docs/DEPLOY-COMPLETO.md) (Railway u otro hosting con Node).
+
 ## Catálogo online (GitHub Pages)
 
 **https://gasacher.github.io/fuzz_equipamientos/**
