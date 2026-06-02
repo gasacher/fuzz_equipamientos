@@ -21,11 +21,8 @@ export default function DemoCatalogoPage() {
   return (
     <div className="space-y-6">
       <div className="rounded-lg border border-[#e50914]/40 bg-[#1a0a0a] px-4 py-3 text-sm text-[#f2f2f2]">
-        <strong>Vista previa del catálogo web.</strong> Es lo mismo que ven en{" "}
-        <a href={appPath("/catalogo")} target="_blank" rel="noreferrer" className="text-[#e50914] underline">
-          el catálogo público
-        </a>
-        . Cualquier alta, edición o baja en{" "}
+        <strong>Vista previa del catálogo web.</strong> Es lo mismo que ven los clientes. Cualquier alta,
+        edición o baja en{" "}
         <Link href={panelDemoPath("/inventario")} className="text-[#e50914] underline">
           Inventario
         </Link>{" "}
