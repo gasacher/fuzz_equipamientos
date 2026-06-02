@@ -15,6 +15,13 @@ No hace falta crear la rama `gh-pages` ni elegir branch/root. Eso solo aplica si
 3. La primera vez, GitHub puede pedir aprobar el environment **github-pages** en Actions; aceptalo.  
 4. URL del catálogo: **https://gasacher.github.io/fuzz_equipamientos/**
 
+## El sitio da 404
+
+1. El repo en GitHub tenía que tener código en `main` (un push).
+2. **Actions** → workflow en verde (build + deploy).
+3. **Settings → Pages → Source: GitHub Actions** (no “Deploy from a branch”).
+4. Esperá 1–2 minutos y recargá la URL.
+
 ## Si no ves “GitHub Actions” en Source
 
 - El repo tiene que ser **público** (en cuenta gratuita, Pages en privados es limitado), o tener Pages habilitado en el plan.  
