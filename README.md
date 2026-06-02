@@ -10,6 +10,16 @@ En el repo de GitHub: **Settings → Pages → Build and deployment → Source: 
 
 Cada push a `main` publica el catálogo público (sin panel admin; el admin sigue siendo local).
 
+Tras cambiar el inventario visible, actualizá los datos online:
+
+```bash
+cd web
+npm run export:catalog
+git add data/catalog.json
+git commit -m "Actualizar catálogo público"
+git push
+```
+
 ## Demo local (Mac)
 
 Doble clic en **`Iniciar-FUZZ.command`** → http://localhost:3000

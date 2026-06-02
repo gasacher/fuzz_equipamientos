@@ -26,16 +26,11 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
-      - name: Instalar y preparar base de datos
+      - name: Instalar y compilar catálogo estático
         working-directory: web
         run: |
           npm ci
-          npx prisma generate
-          npm run db:setup
-
-      - name: Build estático (catálogo público)
-        working-directory: web
-        run: npm run build:gh-pages
+          npm run build:gh-pages
 
       - name: Subir artefacto
         uses: actions/upload-pages-artifact@v3
