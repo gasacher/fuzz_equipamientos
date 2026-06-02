@@ -1,5 +1,6 @@
 import { execSync } from "node:child_process";
 import { copyFile, mkdir, rename, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -15,6 +16,7 @@ async function disable(...relPaths) {
   await mkdir(stashDir, { recursive: true });
   for (const rel of relPaths) {
     const from = path.join(root, rel);
+    if (!existsSync(from)) continue;
     const to = path.join(stashDir, rel.replace(/\//g, "__"));
     await rename(from, to);
     disabled.push([to, from]);
@@ -28,6 +30,9 @@ async function restore() {
 }
 
 await mkdir(stashDir, { recursive: true });
+if (!existsSync(equipoStatic)) {
+  throw new Error("Falta page.static.tsx para export de GitHub Pages");
+}
 await copyFile(equipoPage, equipoBackup);
 await copyFile(equipoStatic, equipoPage);
 

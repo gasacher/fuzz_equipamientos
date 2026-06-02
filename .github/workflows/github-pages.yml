@@ -21,23 +21,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: web/package-lock.json
 
-      - name: Compilar sitio estático
+      - name: Compilar y publicar
         working-directory: web
         env:
           GITHUB_PAGES: "true"
           NEXT_PUBLIC_BASE_PATH: /fuzz_equipamientos
-          NODE_OPTIONS: --max-old-space-size=4096
+          DATABASE_URL: "file:./dev.db"
+          NODE_OPTIONS: --max-old-space-size=8192
         run: |
-          rm -rf node_modules .next out
+          set -eux
+          rm -rf node_modules .next out .gh-pages-stash
           npm ci --ignore-scripts
           npx prisma generate
           npm run build:gh-pages
+          ls -la out/
+          ls -la out/panel/
           test -f out/index.html
           test -f out/panel/index.html
-          ls -la out/panel/
 
       - name: Publicar rama gh-pages
         uses: peaceiris/actions-gh-pages@v4
