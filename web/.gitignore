@@ -17,6 +17,9 @@
 # prisma generado (npm install + npx prisma generate)
 /src/generated/prisma
 
+# build gh-pages (temporal)
+/.gh-pages-stash/
+
 # misc
 .DS_Store
 *.pem

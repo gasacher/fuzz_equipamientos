@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/site-path";
+
 const CATEGORY_IMAGES: Record<string, string> = {
   amps: "/assets/catalog/amplificador.jpeg",
   amplificadores: "/assets/catalog/amplificador.jpeg",
@@ -31,9 +33,9 @@ export function getInstrumentImage(categoria: string, imageUrl?: string | null) 
   if (imageUrl?.trim()) return imageUrl.trim();
   const key = normalizeCategory(categoria);
   for (const [pattern, src] of Object.entries(CATEGORY_IMAGES)) {
-    if (key.includes(pattern) || pattern.includes(key)) return src;
+    if (key.includes(pattern) || pattern.includes(key)) return withBasePath(src);
   }
-  return DEFAULT_IMAGE;
+  return withBasePath(DEFAULT_IMAGE);
 }
 
 export function isExternalImage(src: string) {

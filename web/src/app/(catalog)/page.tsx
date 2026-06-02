@@ -4,8 +4,6 @@ import { toCatalogItems } from "@/lib/catalog";
 import { catalogWhere } from "@/lib/catalog-visibility";
 import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic";
-
 export default async function CatalogHomePage() {
   const items = await prisma.instrument.findMany({
     where: catalogWhere,
@@ -23,7 +21,7 @@ export default async function CatalogHomePage() {
           El catálogo se está actualizando. Escribinos por WhatsApp para consultar disponibilidad.
         </div>
       ) : (
-        <CatalogGrid items={catalog} basePath="/equipo" />
+        <CatalogGrid items={catalog} />
       )}
     </div>
   );

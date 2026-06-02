@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { withBasePath } from "@/lib/site-path";
 
-const LOGO_SRC = "/assets/img/logo-fuzz.png";
+const LOGO_SRC = withBasePath("/assets/img/logo-fuzz.png");
 
 type Props = {
   /** Barra superior (web + admin) */
