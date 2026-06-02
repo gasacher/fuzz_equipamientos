@@ -1,5 +1,5 @@
 import { execSync } from "node:child_process";
-import { mkdir, rename } from "node:fs/promises";
+import { copyFile, mkdir, rename } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -23,7 +23,17 @@ async function restore() {
   }
 }
 
-await disable("src/app/admin", "src/app/login", "src/app/api");
+const catalogStore = path.join(root, "src/lib/catalog-store.ts");
+const catalogStoreBackup = path.join(stashDir, "catalog-store.ts.bak");
+
+await mkdir(stashDir, { recursive: true });
+await copyFile(catalogStore, catalogStoreBackup);
+await copyFile(
+  path.join(root, "src/lib/catalog-store.static.ts"),
+  catalogStore,
+);
+
+await disable("src/app/admin", "src/app/login", "src/app/api", "src/middleware.ts");
 
 try {
   execSync("npx next build --webpack", {
@@ -37,4 +47,5 @@ try {
   });
 } finally {
   await restore();
+  await copyFile(catalogStoreBackup, catalogStore);
 }
