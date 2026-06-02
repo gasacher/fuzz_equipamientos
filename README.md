@@ -40,7 +40,7 @@ npm run refresh   # build + servidor estable
 ```
 
 - **Catálogo:** http://localhost:3000  
-- **Admin:** http://localhost:3000/login (`admin@fuzz.com` / `admin123` — cambiar en producción)
+- **Admin (solo local, no en GitHub Pages):** http://localhost:3000/login (`admin@fuzz.com` / `admin123` — cambiar en producción)
 
 ## Contenido del repo
 

@@ -28,6 +28,14 @@ No hace falta crear la rama `gh-pages` ni elegir branch/root. Eso solo aplica si
 - Entrá a **Actions** y activá workflows si GitHub lo pide.  
 - Hacé al menos un push a `main` con el archivo `.github/workflows/github-pages.yml`.
 
+## Login / admin
+
+**https://gasacher.github.io/fuzz_equipamientos/login no existe** a propósito: GitHub Pages solo sirve el catálogo estático (HTML). No hay servidor para autenticación ni base de datos.
+
+El panel admin funciona **solo en tu Mac**:
+
+- `Iniciar-FUZZ.command` → http://localhost:3000/login
+
 ## Demo al cliente (mientras tanto)
 
 Usá la app completa en tu Mac: doble clic en **`Iniciar-FUZZ.command`** → http://localhost:3000 (catálogo + admin en `/login`).
