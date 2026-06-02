@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { AdminHubCards } from "@/components/AdminHubCards";
-import { ImportExcelButtonDemo } from "@/components/demo/ImportExcelButtonDemo";
 import { SalesMonthSummary } from "@/components/SalesMonthSummary";
 import adminDemo from "@/data/admin-demo.json";
 import { panelDemoPath } from "@/lib/panel-demo-path";
@@ -51,15 +50,6 @@ export function DemoAdminPanel() {
           </div>
         </div>
       </div>
-
-      <section className="fuzz-card space-y-3 p-6">
-        <h2 className="fuzz-title text-lg">Importar desde Excel</h2>
-        <p className="text-sm text-[#9c9c9c]">
-          Actualiza <strong>STOCK</strong> (inventario + catálogo) y <strong>VENTAS</strong> desde{" "}
-          <strong>FUZZEQUIPAMIENTOS - ADMIN.xlsx</strong> en la carpeta del proyecto.
-        </p>
-        <ImportExcelButtonDemo />
-      </section>
     </div>
   );
 }

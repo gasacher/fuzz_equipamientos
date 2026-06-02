@@ -45,7 +45,7 @@ export function InicioPage() {
           </span>
           <h2 className="fuzz-title mt-3 text-2xl text-white md:text-3xl">Panel admin</h2>
           <p className="mt-2 text-sm text-[#9c9c9c]">
-            Stock, ventas, vista del catálogo e importación desde Excel (demo).
+            Stock, ventas y vista del catálogo (demo).
           </p>
           <p className="mt-4 text-sm font-medium text-[#f2f2f2] group-hover:text-[#e50914]">
             Ver panel →
