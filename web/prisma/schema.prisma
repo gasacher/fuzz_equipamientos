@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(CLIENT)
+  clientId     String?
+  client       Client?  @relation(fields: [clientId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Client {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  email        String?
+  phone        String?
+  users        User[]
+  instruments  Instrument[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Instrument {
+  id           String   @id @default(cuid())
+  historias    String?
+  categoria    String
+  subcategoria String?
+  titulo       String
+  valorUsd     Float?
+  valorArg     Float?
+  contacto     String?
+  fb           Boolean  @default(false)
+  ig           String?
+  ml           Boolean  @default(false)
+  marca        String?
+  anio         String?
+  origen       String?
+  imageUrl     String?
+  descripcion       String?
+  visibleInCatalog  Boolean  @default(true)
+  clientId          String?
+  client       Client?  @relation(fields: [clientId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([categoria])
+  @@index([visibleInCatalog])
+  @@index([clientId])
+  @@index([titulo])
+}
+
+model Sale {
+  id                 String   @id @default(cuid())
+  historias          String?
+  dia                String?
+  titulo             String
+  precioVentaUsd     Float?
+  porcentajeComision Float?
+  totalComisionFuzz  Float?
+  mes                String?
+  comKar             Float?
+  comLean            Float?
+  comFuzz            Float?
+  anio               Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([mes])
+  @@index([anio])
+  @@index([titulo])
+}

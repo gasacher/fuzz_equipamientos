@@ -1,0 +1,19 @@
+FUZZ — VER EN TU MAC
+====================
+
+1. Doble clic en: Iniciar-FUZZ.command
+   (Documentos → Fuzz_Stock)
+
+2. Si macOS pide permiso: clic derecho → Abrir → Abrir
+
+3. Esperá "Servidor en marcha" (la 1ª vez compila ~1-2 min)
+
+4. Navegador: http://localhost:3000
+   Admin:    http://localhost:3000/login
+             admin@fuzz.com / admin123
+
+5. No cierres la ventana negra mientras usás el sitio.
+
+Actualizar después de cambios en el código:
+  cerrar ventana → volver a abrir Iniciar-FUZZ.command
+  (recompila solo si hubo cambios)
