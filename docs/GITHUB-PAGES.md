@@ -1,41 +1,26 @@
 # Publicar el catálogo en GitHub Pages
 
-## Configuración en GitHub (solo una vez)
+## Configuración en GitHub (una sola vez)
 
-1. Abrí el repo: https://github.com/gasacher/fuzz_equipamientos  
-2. **Settings** → menú izquierdo **Pages**  
-3. En **Build and deployment** → **Source**, elegí **GitHub Actions** (no “Deploy from a branch”).
+1. Repo → **Settings** → **Pages**
+2. **Build and deployment** → **Source:** elegí **Deploy from a branch**
+3. **Branch:** `gh-pages` → carpeta **`/ (root)`** → **Save**
 
-No hace falta crear la rama `gh-pages` ni elegir branch/root. Eso solo aplica si publicás con “Deploy from a branch”; este proyecto usa el workflow **Deploy catálogo a GitHub Pages**.
+La rama `gh-pages` la crea automáticamente el workflow al hacer push a `main`. Si no la ves, esperá 2 minutos a que termine **Actions** y recargá Settings.
 
-## Primera publicación
+## URLs para el cliente
 
-1. Subí los cambios a `main` (push).  
-2. Pestaña **Actions** → workflow **Deploy catálogo a GitHub Pages** → debe terminar en verde (build + deploy).  
-3. La primera vez, GitHub puede pedir aprobar el environment **github-pages** en Actions; aceptalo.  
-4. URL del catálogo: **https://gasacher.github.io/fuzz_equipamientos/**
+| Página | URL |
+|--------|-----|
+| Catálogo | https://gasacher.github.io/fuzz_equipamientos/ |
+| Panel demo | https://gasacher.github.io/fuzz_equipamientos/panel/ |
 
-## El sitio da 404
+## Si ves 404
 
-1. El repo en GitHub tenía que tener código en `main` (un push).
-2. **Actions** → workflow en verde (build + deploy).
-3. **Settings → Pages → Source: GitHub Actions** (no “Deploy from a branch”).
-4. Esperá 1–2 minutos y recargá la URL.
+1. **Actions** → “Deploy catálogo a GitHub Pages” debe estar en **verde**
+2. **Settings → Pages** debe decir branch **`gh-pages`**, no “GitHub Actions” ni `main`
+3. Esperá 2–5 minutos y recargá con Cmd+Shift+R
 
-## Si no ves “GitHub Actions” en Source
+## Login / admin real
 
-- El repo tiene que ser **público** (en cuenta gratuita, Pages en privados es limitado), o tener Pages habilitado en el plan.  
-- Entrá a **Actions** y activá workflows si GitHub lo pide.  
-- Hacé al menos un push a `main` con el archivo `.github/workflows/github-pages.yml`.
-
-## Login / admin
-
-**https://gasacher.github.io/fuzz_equipamientos/login no existe** a propósito: GitHub Pages solo sirve el catálogo estático (HTML). No hay servidor para autenticación ni base de datos.
-
-El panel admin funciona **solo en tu Mac**:
-
-- `Iniciar-FUZZ.command` → http://localhost:3000/login
-
-## Demo al cliente (mientras tanto)
-
-Usá la app completa en tu Mac: doble clic en **`Iniciar-FUZZ.command`** → http://localhost:3000 (catálogo + admin en `/login`).
+No va en Pages. Solo en tu Mac (`Mostrar-FUZZ-Cliente.command`) o en Render (ver DEPLOY-COMPLETO.md).

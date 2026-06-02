@@ -6,16 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,27 +24,25 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
-      - name: Compilar catálogo estático
+      - name: Compilar sitio estático
         working-directory: web
         env:
+          GITHUB_PAGES: "true"
+          NEXT_PUBLIC_BASE_PATH: /fuzz_equipamientos
           NODE_OPTIONS: --max-old-space-size=4096
         run: |
+          rm -rf node_modules .next out
           npm ci --ignore-scripts
           npx prisma generate
           npm run build:gh-pages
+          test -f out/index.html
+          test -f out/panel/index.html
+          ls -la out/panel/
 
-      - name: Subir artefacto Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: Publicar rama gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: web/out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Publicar en GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: web/out
+          publish_branch: gh-pages
+          force_orphan: true

@@ -10,7 +10,7 @@ GitHub Pages **no** puede correr login ni base de datos. Para publicar todo como
 
 **https://gasacher.github.io/fuzz_equipamientos/**
 
-En el repo: **Settings → Pages → Source: GitHub Actions** (no uses “Deploy from a branch”). Guía: [docs/GITHUB-PAGES.md](docs/GITHUB-PAGES.md).
+En el repo: **Settings → Pages → Branch `gh-pages` / root** (la rama la crea Actions). Guía: [docs/GITHUB-PAGES.md](docs/GITHUB-PAGES.md).
 
 Cada push a `main` publica el catálogo público (sin panel admin; el admin sigue siendo local).
 

@@ -17,6 +17,10 @@ Texto sugerido para el cliente:
 · Panel interno de demo (inventario, ventas, Excel)
 Cualquier duda, avisame."
 
+Si /panel/ da 404:
+  GitHub → Settings → Pages → Branch: gh-pages → / (root)
+  Esperá 2 min después de un push verde en Actions.
+
 IMPORTANTE
 ----------
 Esas URLs son DEMO estática (sin login real).
