@@ -2,6 +2,14 @@
 
 Catálogo web público + panel admin (stock, ventas, importación Excel).
 
+## Catálogo online (GitHub Pages)
+
+**https://gasacher.github.io/fuzz_equipamientos/**
+
+En el repo de GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+Cada push a `main` publica el catálogo público (sin panel admin; el admin sigue siendo local).
+
 ## Demo local (Mac)
 
 Doble clic en **`Iniciar-FUZZ.command`** → http://localhost:3000
