@@ -26,13 +26,15 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
-      - name: Instalar y compilar catálogo estático
+      - name: Compilar catálogo estático
         working-directory: web
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         run: |
           npm ci --ignore-scripts
           npm run build:gh-pages
 
-      - name: Subir artefacto
+      - name: Subir artefacto Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: web/out
@@ -44,5 +46,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/deploy-pages@v4
+      - name: Publicar en GitHub Pages
         id: deployment
+        uses: actions/deploy-pages@v4

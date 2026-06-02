@@ -6,7 +6,7 @@ Catálogo web público + panel admin (stock, ventas, importación Excel).
 
 **https://gasacher.github.io/fuzz_equipamientos/**
 
-En el repo de GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+En el repo: **Settings → Pages → Source: GitHub Actions** (no uses “Deploy from a branch”). Guía: [docs/GITHUB-PAGES.md](docs/GITHUB-PAGES.md).
 
 Cada push a `main` publica el catálogo público (sin panel admin; el admin sigue siendo local).
 
@@ -15,7 +15,7 @@ Tras cambiar el inventario visible, actualizá los datos online:
 ```bash
 cd web
 npm run export:catalog
-git add data/catalog.json
+git add web/src/data/catalog.json
 git commit -m "Actualizar catálogo público"
 git push
 ```

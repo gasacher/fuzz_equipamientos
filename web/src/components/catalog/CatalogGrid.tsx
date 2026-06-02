@@ -110,7 +110,7 @@ export function CatalogGrid({ items, basePath = withBasePath("/equipo") }: Props
                 key={item.id}
                 className="catalog-card group flex flex-col overflow-hidden rounded-xl border border-[#1c1c1c] bg-[#111] transition hover:border-[#e50914]"
               >
-                <Link href={`${basePath}/${item.id}`} className="relative aspect-[4/3] overflow-hidden bg-[#0f0f0f]">
+                <Link href={`${basePath}?id=${item.id}`} className="relative aspect-[4/3] overflow-hidden bg-[#0f0f0f]">
                   <CatalogImage src={img} alt={item.titulo} />
                   <span className="absolute left-2 top-2 rounded bg-[#e50914] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
                     Venta
@@ -118,7 +118,7 @@ export function CatalogGrid({ items, basePath = withBasePath("/equipo") }: Props
                 </Link>
                 <div className="flex flex-1 flex-col p-3">
                   <h2 className="line-clamp-2 text-sm font-semibold leading-snug text-white">
-                    <Link href={`${basePath}/${item.id}`} className="hover:text-[#e50914]">
+                    <Link href={`${basePath}?id=${item.id}`} className="hover:text-[#e50914]">
                       {item.titulo}
                     </Link>
                   </h2>
@@ -130,7 +130,7 @@ export function CatalogGrid({ items, basePath = withBasePath("/equipo") }: Props
                     {formatCatalogPrice(item.valorUsd)}
                   </p>
                   <div className="mt-auto flex flex-col gap-2 pt-3">
-                    <Link href={`${basePath}/${item.id}`} className="btn-fuzz-outline w-full py-2 text-center text-xs">
+                    <Link href={`${basePath}?id=${item.id}`} className="btn-fuzz-outline w-full py-2 text-center text-xs">
                       Ver detalle
                     </Link>
                   </div>

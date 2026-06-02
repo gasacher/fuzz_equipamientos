@@ -1,5 +1,5 @@
 import { execSync } from "node:child_process";
-import { copyFile, mkdir, rename } from "node:fs/promises";
+import { mkdir, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -23,16 +23,6 @@ async function restore() {
   }
 }
 
-const catalogStore = path.join(root, "src/lib/catalog-store.ts");
-const catalogStoreBackup = path.join(stashDir, "catalog-store.ts.bak");
-
-await mkdir(stashDir, { recursive: true });
-await copyFile(catalogStore, catalogStoreBackup);
-await copyFile(
-  path.join(root, "src/lib/catalog-store.static.ts"),
-  catalogStore,
-);
-
 await disable("src/app/admin", "src/app/login", "src/app/api", "src/middleware.ts");
 
 try {
@@ -45,7 +35,8 @@ try {
       NEXT_PUBLIC_BASE_PATH: "/fuzz_equipamientos",
     },
   });
+
+  await writeFile(path.join(root, "out", ".nojekyll"), "");
 } finally {
   await restore();
-  await copyFile(catalogStoreBackup, catalogStore);
 }

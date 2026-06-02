@@ -1,12 +1,8 @@
 import type { CatalogItem } from "@/components/catalog/CatalogGrid";
 import type { ProductData } from "@/components/catalog/CatalogProduct";
 import catalogData from "@/data/catalog.json";
-import { catalogWhere } from "@/lib/catalog-visibility";
-import { toCatalogItems, toProductData } from "@/lib/catalog";
 
-const useStaticCatalog = process.env.GITHUB_PAGES === "true";
-
-function staticCatalogItems(): CatalogItem[] {
+function staticItems(): CatalogItem[] {
   return catalogData.items.map((item) => ({
     id: item.id,
     titulo: item.titulo,
@@ -19,37 +15,39 @@ function staticCatalogItems(): CatalogItem[] {
   }));
 }
 
+function staticProduct(id: string): ProductData | null {
+  return catalogData.items.find((item) => item.id === id) ?? null;
+}
+
 export async function fetchCatalogItems(): Promise<CatalogItem[]> {
-  if (useStaticCatalog) return staticCatalogItems();
+  if (process.env.GITHUB_PAGES === "true") {
+    return staticItems();
+  }
 
   const { prisma } = await import("@/lib/prisma");
+  const { catalogWhere } = await import("@/lib/catalog-visibility");
+  const { toCatalogItems } = await import("@/lib/catalog");
+
   const items = await prisma.instrument.findMany({
     where: catalogWhere,
-    orderBy: [{ categoria: "asc" }, { titulo: "asc" }],
+    orderBy: { titulo: "asc" },
   });
+
   return toCatalogItems(items);
 }
 
 export async function fetchCatalogProduct(id: string): Promise<ProductData | null> {
-  if (useStaticCatalog) {
-    return catalogData.items.find((i) => i.id === id) ?? null;
+  if (process.env.GITHUB_PAGES === "true") {
+    return staticProduct(id);
   }
 
   const { prisma } = await import("@/lib/prisma");
-  const product = await prisma.instrument.findFirst({
+  const { catalogWhere } = await import("@/lib/catalog-visibility");
+  const { toProductData } = await import("@/lib/catalog");
+
+  const item = await prisma.instrument.findFirst({
     where: { id, ...catalogWhere },
   });
-  if (!product) return null;
-  return toProductData(product);
-}
 
-export async function fetchCatalogIds(): Promise<string[]> {
-  if (useStaticCatalog) return catalogData.items.map((i) => i.id);
-
-  const { prisma } = await import("@/lib/prisma");
-  const items = await prisma.instrument.findMany({
-    where: catalogWhere,
-    select: { id: true },
-  });
-  return items.map((i) => i.id);
+  return item ? toProductData(item) : null;
 }
