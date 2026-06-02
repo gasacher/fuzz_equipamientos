@@ -26,7 +26,9 @@ export default function DemoInventarioPage() {
           <Link href={panelDemoPath("/catalogo")} className="btn-fuzz-outline">
             Ver catálogo web
           </Link>
-          <span className="btn-fuzz pointer-events-none opacity-80">+ Nuevo</span>
+          <Link href={panelDemoPath("/inventario/nuevo")} className="btn-fuzz">
+            + Nuevo
+          </Link>
         </div>
       </div>
       <InstrumentTable

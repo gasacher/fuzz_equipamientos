@@ -45,8 +45,12 @@ export function DemoAdminPanel() {
         <div className="fuzz-card p-4">
           <h3 className="font-semibold text-white">Acceso rápido</h3>
           <div className="mt-3 flex flex-wrap gap-2">
-            <span className="btn-fuzz-outline pointer-events-none text-xs opacity-80">+ Stock</span>
-            <span className="btn-fuzz-outline pointer-events-none text-xs opacity-80">+ Venta</span>
+            <Link href={panelDemoPath("/inventario/nuevo")} className="btn-fuzz-outline text-xs">
+              + Stock
+            </Link>
+            <Link href={panelDemoPath("/ventas/nuevo")} className="btn-fuzz-outline text-xs">
+              + Venta
+            </Link>
           </div>
         </div>
       </div>

@@ -18,7 +18,9 @@ export default function DemoVentasPage() {
             Listado completo con filtros y totales (hoja VENTAS del Excel).
           </p>
         </div>
-        <span className="btn-fuzz pointer-events-none opacity-80">+ Nueva venta</span>
+        <Link href={panelDemoPath("/ventas/nuevo")} className="btn-fuzz">
+          + Nueva venta
+        </Link>
       </div>
       <SalesTable items={adminDemo.sales} admin pathPrefix={panelDemoPath()} />
     </div>

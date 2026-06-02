@@ -7,6 +7,9 @@ import type { InstrumentTaxonomy } from "@/lib/taxonomy";
 
 type Props = {
   taxonomy: InstrumentTaxonomy;
+  /** GitHub Pages demo: muestra el flujo sin llamar a la API */
+  demoMode?: boolean;
+  listHref?: string;
   initial?: {
     id: string;
     categoria: string;
@@ -25,7 +28,7 @@ type Props = {
   };
 };
 
-export function InstrumentForm({ taxonomy, initial }: Props) {
+export function InstrumentForm({ taxonomy, initial, demoMode, listHref }: Props) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +37,11 @@ export function InstrumentForm({ taxonomy, initial }: Props) {
     e.preventDefault();
     setLoading(true);
     setError("");
+    if (demoMode) {
+      setLoading(false);
+      router.push(listHref ?? "/admin/inventario");
+      return;
+    }
     const fd = new FormData(e.currentTarget);
     const categoria = String(fd.get("categoria") || "").trim();
     const subcategoria = String(fd.get("subcategoria") || "").trim() || null;

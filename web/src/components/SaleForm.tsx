@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
+  demoMode?: boolean;
+  listHref?: string;
   initial?: {
     id: string;
     historias: string | null;
@@ -20,7 +22,7 @@ type Props = {
   };
 };
 
-export function SaleForm({ initial }: Props) {
+export function SaleForm({ initial, demoMode, listHref }: Props) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,6 +31,11 @@ export function SaleForm({ initial }: Props) {
     e.preventDefault();
     setLoading(true);
     setError("");
+    if (demoMode) {
+      setLoading(false);
+      router.push(listHref ?? "/admin/ventas");
+      return;
+    }
     const fd = new FormData(e.currentTarget);
     const body = {
       historias: String(fd.get("historias") || "") || null,
