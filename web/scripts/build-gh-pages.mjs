@@ -26,7 +26,7 @@ async function restore() {
 await disable("src/app/admin", "src/app/login", "src/app/api");
 
 try {
-  execSync("npx next build", {
+  execSync("npx next build --webpack", {
     cwd: root,
     stdio: "inherit",
     env: {
