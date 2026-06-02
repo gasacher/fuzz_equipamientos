@@ -5,7 +5,8 @@ import { panelDemoPath } from "@/lib/panel-demo-path";
 
 export function DemoAdminNav() {
   const panel = panelDemoPath();
-  const catalog = appPath("/");
+  const inicio = appPath("/");
+  const catalog = appPath("/catalogo");
 
   return (
     <nav className="border-b border-white/10 bg-black">
@@ -24,8 +25,11 @@ export function DemoAdminNav() {
           <Link href={panelDemoPath("/catalogo")} className="text-[#f2f2f2] hover:text-white">
             Catálogo web
           </Link>
+          <Link href={inicio} className="text-[#f2f2f2] hover:text-white">
+            Inicio
+          </Link>
           <a href={catalog} target="_blank" rel="noreferrer" className="text-[#f2f2f2] hover:text-white">
-            Ver sitio público
+            Catálogo web
           </a>
           <span className="hidden text-[#9c9c9c] sm:inline">Admin FUZZ</span>
           <span className="btn-fuzz-outline pointer-events-none text-xs opacity-70">Salir</span>

@@ -52,6 +52,6 @@ if [ "$NEED_BUILD" = "1" ]; then
   npm run build
 fi
 
-open "http://localhost:3000/login" 2>/dev/null || true
+open "http://localhost:3000/catalogo" 2>/dev/null || true
 echo "→ Servidor en marcha..."
 exec npm run start

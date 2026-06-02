@@ -41,7 +41,7 @@ export default function LoginPage() {
         <h1 className="fuzz-title mb-2 text-center text-xl text-[#9c9c9c]">Admin</h1>
         <p className="mb-6 text-center text-sm text-[#9c9c9c]">
           Stock y ventas. El{" "}
-          <a href="/" className="text-[#e50914] hover:underline">
+          <a href="/catalogo" className="text-[#e50914] hover:underline">
             catálogo público
           </a>{" "}
           no requiere login.

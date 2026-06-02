@@ -14,7 +14,7 @@ export default async function EquipoPage({ searchParams }: Props) {
     return (
       <div className="fuzz-card space-y-4 p-8 text-center">
         <p className="text-[#9c9c9c]">Producto no encontrado.</p>
-        <Link href={appPath("/")} className="text-[#e50914] hover:underline">
+        <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
           Volver al catálogo
         </Link>
       </div>
@@ -27,12 +27,12 @@ export default async function EquipoPage({ searchParams }: Props) {
     return (
       <div className="fuzz-card space-y-4 p-8 text-center">
         <p className="text-[#9c9c9c]">Producto no encontrado.</p>
-        <Link href={appPath("/")} className="text-[#e50914] hover:underline">
+        <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
           Volver al catálogo
         </Link>
       </div>
     );
   }
 
-  return <CatalogProduct product={product} catalogBasePath={appPath("/")} />;
+  return <CatalogProduct product={product} catalogBasePath={appPath("/catalogo")} />;
 }

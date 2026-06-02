@@ -1,42 +1,27 @@
-FUZZ — MOSTRAR WEB + ADMIN AL CLIENTE (sin reunión)
-==================================================
+FUZZ — UN SOLO LINK PARA EL CLIENTE
+==================================
 
-Enviá estos dos links. El panel demo es el admin completo (sin login).
+Enviá solo esta URL:
 
-1) WEB PÚBLICA (compradores)
    https://gasacher.github.io/fuzz_equipamientos/
 
-2) PANEL ADMIN — DEMO (gestión interna)
-   https://gasacher.github.io/fuzz_equipamientos/panel/
+Ahí elige:
+   · Catálogo web (lo que ven los compradores)
+   · Panel admin (demo: stock, ventas, Excel)
+
+Desde catálogo o panel siempre puede volver a Inicio.
 
 
-GUÍA: QUÉ MOSTRAR EN EL PANEL DEMO
-------------------------------------
-En el panel, el cliente puede hacer clic en:
+TEXTO WHATSAPP
+--------------
+Hola! Te paso el sistema FUZZ para que lo veas:
 
-· Stock → tabla de inventario (383 ítems), filtros, publicar en catálogo
-· Ventas → listado y totales del Excel
-· Catálogo web → vista previa de lo que ven en el link 1
-· Importar Excel → botón de demo (en la versión real actualiza todo)
-
-Desde el catálogo público hay un banner rojo que lleva al panel.
-
-
-TEXTO PARA WHATSAPP
--------------------
-Hola! Te paso FUZZ en dos partes:
-
-1) Catálogo online (clientes, precios USD):
 https://gasacher.github.io/fuzz_equipamientos/
 
-2) Panel de gestión — demo (stock, ventas, Excel):
-https://gasacher.github.io/fuzz_equipamientos/panel/
-
-En el panel podés entrar a Stock, Ventas y ver cómo se publica el catálogo.
+En la pantalla de inicio elegís Catálogo web o Panel admin.
 Cualquier duda, avisame.
 
 
-PANEL REAL (solo vos, con login)
---------------------------------
+PANEL REAL (solo vos)
+---------------------
 Mostrar-FUZZ-Cliente.command → http://localhost:3000/login
-admin@fuzz.com / admin123

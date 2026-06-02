@@ -34,6 +34,6 @@ unset GITHUB_PAGES
 unset NEXT_PUBLIC_BASE_PATH
 npm run build
 
-open "http://localhost:3000/login" 2>/dev/null || true
+open "http://localhost:3000" 2>/dev/null || true
 echo "→ Listo. No cierres esta ventana."
 exec npm run start

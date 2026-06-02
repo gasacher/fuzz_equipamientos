@@ -14,7 +14,7 @@ export default function PublicDemoLayout({ children }: { children: React.ReactNo
       <div className="border-b border-[#e50914]/30 bg-[#1a0a0a] py-2 text-center text-xs text-[#9c9c9c]">
         <strong className="text-[#e50914]">Vista demo</strong> — mismos datos y diseño que el panel real.{" "}
         <Link href={appPath("/")} className="text-[#e50914] hover:underline">
-          Catálogo público
+          Inicio
         </Link>
       </div>
       <DemoAdminNav />

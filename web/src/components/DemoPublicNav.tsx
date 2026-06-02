@@ -2,20 +2,28 @@ import Link from "next/link";
 import { FuzzLogo } from "@/components/FuzzLogo";
 import { buildWhatsAppConsultUrl } from "@/lib/fuzz";
 import { appPath, isStaticCatalogSite } from "@/lib/site-path";
+import { panelDemoPath } from "@/lib/panel-demo-path";
 
 type Props = {
   active: "catalog" | "panel";
 };
 
 export function DemoPublicNav({ active }: Props) {
-  const catalogHref = appPath("/");
-  const panelHref = appPath("/panel/");
+  const inicioHref = appPath("/");
+  const catalogHref = appPath("/catalogo");
+  const panelHref = panelDemoPath();
 
   return (
     <nav className="border-b border-white/10 bg-black">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-4">
-        <FuzzLogo size="bar" href={catalogHref} />
+        <FuzzLogo size="bar" href={inicioHref} />
         <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+          <Link
+            href={inicioHref}
+            className="hidden text-xs text-[#9c9c9c] hover:text-white sm:inline md:text-sm"
+          >
+            Inicio
+          </Link>
           <Link
             href={catalogHref}
             className={`text-xs md:text-sm ${
