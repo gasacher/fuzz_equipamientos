@@ -1,4 +1,4 @@
-# FUZZ Stock
+# FUZZ Equipamientos
 
 Catálogo web público + panel admin (stock, ventas, importación Excel).
 
