@@ -4,6 +4,7 @@ import { formatUsd, type MonthSalesStat } from "@/lib/sales-stats";
 type Props = {
   data: MonthSalesStat[];
   showLink?: boolean;
+  pathPrefix?: string;
 };
 
 /** Meses con nombre (excluye "SIN MES" del Excel). */
@@ -11,7 +12,7 @@ function monthsWithLabel(data: MonthSalesStat[]) {
   return data.filter((d) => d.mes !== "SIN MES" && d.count > 0);
 }
 
-export function SalesMonthSummary({ data, showLink = true }: Props) {
+export function SalesMonthSummary({ data, showLink = true, pathPrefix = "/admin" }: Props) {
   const months = monthsWithLabel(data);
   const sinMes = data.find((d) => d.mes === "SIN MES");
   const totalVentas = data.reduce((s, d) => s + d.ventasUsd, 0);
@@ -22,7 +23,7 @@ export function SalesMonthSummary({ data, showLink = true }: Props) {
     return (
       <p className="text-sm text-[#9c9c9c]">
         Sin ventas cargadas.{" "}
-        <Link href="/admin/ventas" className="text-[#e50914] hover:underline">
+        <Link href={`${pathPrefix}/ventas`} className="text-[#e50914] hover:underline">
           Ir a ventas
         </Link>
       </p>
@@ -38,7 +39,7 @@ export function SalesMonthSummary({ data, showLink = true }: Props) {
           <span className="text-white">{formatUsd(totalComision)}</span>
         </p>
         {showLink && (
-          <Link href="/admin/ventas" className="text-xs text-[#e50914] hover:underline">
+          <Link href={`${pathPrefix}/ventas`} className="text-xs text-[#e50914] hover:underline">
             Ver listado →
           </Link>
         )}
@@ -71,7 +72,7 @@ export function SalesMonthSummary({ data, showLink = true }: Props) {
       {sinMes && sinMes.count > 0 && (
         <p className="text-xs text-[#9c9c9c]">
           + {sinMes.count} ventas sin mes ({formatUsd(sinMes.ventasUsd)}) — ver en{" "}
-          <Link href="/admin/ventas" className="text-[#e50914] hover:underline">
+          <Link href={`${pathPrefix}/ventas`} className="text-[#e50914] hover:underline">
             listado completo
           </Link>
         </p>

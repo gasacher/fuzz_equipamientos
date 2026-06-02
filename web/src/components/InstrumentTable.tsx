@@ -27,6 +27,7 @@ type Props = {
   admin?: boolean;
   /** Vista pública para clientes: sin precios ni datos internos */
   catalog?: boolean;
+  pathPrefix?: string;
 };
 
 export function InstrumentTable({
@@ -36,6 +37,7 @@ export function InstrumentTable({
   showCatalogStatus,
   admin,
   catalog,
+  pathPrefix = "/admin",
 }: Props) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
@@ -159,7 +161,7 @@ export function InstrumentTable({
                 </td>
                 {admin && (
                   <td>
-                    <Link href={`/admin/inventario/${i.id}`} className="text-[#e50914]">
+                    <Link href={`${pathPrefix}/inventario/${i.id}`} className="text-[#e50914]">
                       Editar
                     </Link>
                   </td>

@@ -6,6 +6,8 @@ type Props = {
   salesCount: number;
   salesTotalUsd: number;
   salesCommission: number;
+  /** Prefijo de rutas, ej. /admin o /panel */
+  pathPrefix?: string;
 };
 
 function fmtUsd(n: number) {
@@ -18,11 +20,12 @@ export function AdminHubCards({
   salesCount,
   salesTotalUsd,
   salesCommission,
+  pathPrefix = "/admin",
 }: Props) {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <Link
-        href="/admin/inventario"
+        href={`${pathPrefix}/inventario`}
         className="hub-card group block rounded-xl border border-[#1c1c1c] bg-[#111] p-6 transition hover:border-[#e50914]"
       >
         <div className="mb-4 flex items-start justify-between">
@@ -41,7 +44,7 @@ export function AdminHubCards({
       </Link>
 
       <Link
-        href="/admin/ventas"
+        href={`${pathPrefix}/ventas`}
         className="hub-card group block rounded-xl border border-[#1c1c1c] bg-[#111] p-6 transition hover:border-[#e50914]"
       >
         <div className="mb-4 flex items-start justify-between">

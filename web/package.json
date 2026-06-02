@@ -17,7 +17,9 @@
     "db:migrate": "prisma migrate deploy",
     "db:seed": "tsx scripts/seed.ts",
     "db:setup": "prisma migrate deploy && npm run db:seed",
-    "export:catalog": "tsx scripts/export-catalog-json.ts"
+    "export:catalog": "tsx scripts/export-catalog-json.ts",
+    "export:admin-demo": "tsx scripts/export-admin-demo.ts",
+    "export:demo": "npm run export:catalog && npm run export:admin-demo"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.8.0",

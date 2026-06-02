@@ -1,27 +1,42 @@
-FUZZ — ENVIAR AL CLIENTE (sin reunión)
-======================================
+FUZZ — MOSTRAR WEB + ADMIN AL CLIENTE (sin reunión)
+==================================================
 
-Dos links distintos. Copiá y pegá por WhatsApp o mail:
+Enviá estos dos links. El panel demo es el admin completo (sin login).
 
-1) CATÁLOGO PÚBLICO (lo que ven los compradores)
+1) WEB PÚBLICA (compradores)
    https://gasacher.github.io/fuzz_equipamientos/
 
-2) PANEL ADMIN — DEMO (cómo gestionás stock y ventas)
+2) PANEL ADMIN — DEMO (gestión interna)
    https://gasacher.github.io/fuzz_equipamientos/panel/
 
-En cada página hay enlaces para pasar de una a la otra.
 
-Texto sugerido para el cliente:
-"Hola! Te paso dos vistas del sistema FUZZ:
-· Catálogo online con precios en USD
-· Panel interno de demo (inventario, ventas, Excel)
-Cualquier duda, avisame."
+GUÍA: QUÉ MOSTRAR EN EL PANEL DEMO
+------------------------------------
+En el panel, el cliente puede hacer clic en:
 
-Si /panel/ da 404:
-  GitHub → Settings → Pages → Branch: gh-pages → / (root)
-  Esperá 2 min después de un push verde en Actions.
+· Stock → tabla de inventario (383 ítems), filtros, publicar en catálogo
+· Ventas → listado y totales del Excel
+· Catálogo web → vista previa de lo que ven en el link 1
+· Importar Excel → botón de demo (en la versión real actualiza todo)
 
-IMPORTANTE
-----------
-Esas URLs son DEMO estática (sin login real).
-Para usar el panel de verdad en tu Mac: Mostrar-FUZZ-Cliente.command
+Desde el catálogo público hay un banner rojo que lleva al panel.
+
+
+TEXTO PARA WHATSAPP
+-------------------
+Hola! Te paso FUZZ en dos partes:
+
+1) Catálogo online (clientes, precios USD):
+https://gasacher.github.io/fuzz_equipamientos/
+
+2) Panel de gestión — demo (stock, ventas, Excel):
+https://gasacher.github.io/fuzz_equipamientos/panel/
+
+En el panel podés entrar a Stock, Ventas y ver cómo se publica el catálogo.
+Cualquier duda, avisame.
+
+
+PANEL REAL (solo vos, con login)
+--------------------------------
+Mostrar-FUZZ-Cliente.command → http://localhost:3000/login
+admin@fuzz.com / admin123

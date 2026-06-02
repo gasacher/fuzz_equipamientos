@@ -31,9 +31,10 @@ function fmtPct(n: number | null) {
 type Props = {
   items: SaleRow[];
   admin?: boolean;
+  pathPrefix?: string;
 };
 
-export function SalesTable({ items, admin }: Props) {
+export function SalesTable({ items, admin, pathPrefix = "/admin" }: Props) {
   const [q, setQ] = useState("");
   const [mes, setMes] = useState("");
   const [anio, setAnio] = useState("");
@@ -134,7 +135,7 @@ export function SalesTable({ items, admin }: Props) {
                 <td>{fmtUsd(i.comLean)}</td>
                 {admin && (
                   <td>
-                    <Link href={`/admin/ventas/${i.id}`} className="text-[#e50914]">
+                    <Link href={`${pathPrefix}/ventas/${i.id}`} className="text-[#e50914]">
                       Editar
                     </Link>
                   </td>

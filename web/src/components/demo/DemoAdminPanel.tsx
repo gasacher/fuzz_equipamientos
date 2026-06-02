@@ -1,93 +1,64 @@
-import catalogData from "@/data/catalog.json";
-import { formatCatalogPrice } from "@/lib/format-price";
-
-const DEMO_SALES = {
-  count: 128,
-  totalUsd: 284_500,
-  commission: 42_675,
-};
+import Link from "next/link";
+import { AdminHubCards } from "@/components/AdminHubCards";
+import { ImportExcelButtonDemo } from "@/components/demo/ImportExcelButtonDemo";
+import { SalesMonthSummary } from "@/components/SalesMonthSummary";
+import adminDemo from "@/data/admin-demo.json";
+import { panelDemoPath } from "@/lib/panel-demo-path";
 
 export function DemoAdminPanel() {
-  const items = catalogData.items;
-  const stockTotal = items.length;
-  const stockPublished = items.length;
-  const sample = items.slice(0, 8);
+  const d = adminDemo;
 
   return (
     <div className="space-y-8">
-      <div className="rounded-lg border border-[#e50914]/40 bg-[#1a0a0a] px-4 py-3 text-sm text-[#f2f2f2]">
-        <strong className="text-[#e50914]">Vista demo.</strong> Así se ve el panel interno (stock, ventas,
-        importación Excel). En la versión operativa hay login, edición y datos en tiempo real.
-      </div>
-
       <header>
         <h1 className="fuzz-title text-3xl">Panel FUZZ</h1>
         <p className="mt-2 text-[#9c9c9c]">
-          Gestión de <strong className="text-[#f2f2f2]">stock</strong> y{" "}
-          <strong className="text-[#f2f2f2]">ventas</strong> — vista de demostración.
+          Elegí qué querés actualizar: <strong className="text-[#f2f2f2]">stock</strong> (inventario y
+          catálogo web) o <strong className="text-[#f2f2f2]">ventas</strong> (comisiones y operaciones).
         </p>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-[#1c1c1c] bg-[#111] p-6">
-          <span className="text-xs font-semibold uppercase tracking-wide text-[#e50914]">Stock</span>
-          <h2 className="fuzz-title mt-2 text-2xl text-white">Inventario</h2>
-          <p className="mt-2 text-sm text-[#9c9c9c]">
-            {stockPublished} publicados en catálogo · {stockTotal} ítems en stock.
+      <AdminHubCards
+        stockTotal={d.stockTotal}
+        stockPublished={d.stockPublished}
+        salesCount={d.salesCount}
+        salesTotalUsd={d.salesTotalUsd}
+        salesCommission={d.salesCommission}
+        pathPrefix={panelDemoPath()}
+      />
+
+      {d.salesCount > 0 && (
+        <section className="fuzz-card p-4">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#9c9c9c]">
+            Resumen ventas
+          </h2>
+          <SalesMonthSummary data={d.salesByMonth} pathPrefix={panelDemoPath()} />
+        </section>
+      )}
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Link href={panelDemoPath("/catalogo")} className="fuzz-card block p-4 transition hover:border-[#e50914]">
+          <h3 className="font-semibold text-white">Vista catálogo web</h3>
+          <p className="mt-1 text-sm text-[#9c9c9c]">
+            Previsualizá lo que ven los clientes ({d.stockPublished} ítems)
           </p>
-        </div>
-        <div className="rounded-xl border border-[#1c1c1c] bg-[#111] p-6">
-          <span className="text-xs font-semibold uppercase tracking-wide text-[#e50914]">Ventas</span>
-          <h2 className="fuzz-title mt-2 text-2xl text-white">Ventas</h2>
-          <p className="mt-2 text-sm text-[#9c9c9c]">
-            {DEMO_SALES.count} operaciones · ${DEMO_SALES.totalUsd.toLocaleString("es-AR")} USD · $
-            {DEMO_SALES.commission.toLocaleString("es-AR")} comisión FUZZ.
-          </p>
+        </Link>
+        <div className="fuzz-card p-4">
+          <h3 className="font-semibold text-white">Acceso rápido</h3>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="btn-fuzz-outline pointer-events-none text-xs opacity-80">+ Stock</span>
+            <span className="btn-fuzz-outline pointer-events-none text-xs opacity-80">+ Venta</span>
+          </div>
         </div>
       </div>
-
-      <section className="fuzz-card overflow-hidden p-0">
-        <div className="border-b border-[#1c1c1c] px-4 py-3">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-[#9c9c9c]">
-            Inventario (muestra)
-          </h2>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-[#0f0f0f] text-xs uppercase text-[#9c9c9c]">
-              <tr>
-                <th className="px-4 py-2">Título</th>
-                <th className="px-4 py-2">Categoría</th>
-                <th className="px-4 py-2">USD</th>
-                <th className="px-4 py-2">Catálogo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sample.map((item) => (
-                <tr key={item.id} className="border-t border-[#1c1c1c]">
-                  <td className="px-4 py-2 text-white">{item.titulo}</td>
-                  <td className="px-4 py-2 text-[#9c9c9c]">{item.categoria}</td>
-                  <td className="px-4 py-2 text-[#e50914]">{formatCatalogPrice(item.valorUsd)}</td>
-                  <td className="px-4 py-2 text-[#9c9c9c]">Visible</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="px-4 py-3 text-xs text-[#9c9c9c]">
-          + {stockTotal - sample.length} ítems más en el inventario completo.
-        </p>
-      </section>
 
       <section className="fuzz-card space-y-3 p-6">
         <h2 className="fuzz-title text-lg">Importar desde Excel</h2>
         <p className="text-sm text-[#9c9c9c]">
-          En el sistema real, un clic actualiza <strong>STOCK</strong> y <strong>VENTAS</strong> desde{" "}
-          <strong>FUZZEQUIPAMIENTOS - ADMIN.xlsx</strong>.
+          Actualiza <strong>STOCK</strong> (inventario + catálogo) y <strong>VENTAS</strong> desde{" "}
+          <strong>FUZZEQUIPAMIENTOS - ADMIN.xlsx</strong> en la carpeta del proyecto.
         </p>
-        <span className="inline-block rounded-md border border-[#333] px-4 py-2 text-sm text-[#9c9c9c]">
-          Importar Excel (demo)
-        </span>
+        <ImportExcelButtonDemo />
       </section>
     </div>
   );
