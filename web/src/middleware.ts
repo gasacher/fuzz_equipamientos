@@ -25,7 +25,7 @@ export async function middleware(request: NextRequest) {
   }
   if (pathname.startsWith("/cliente/")) {
     const id = pathname.replace("/cliente/", "");
-    return NextResponse.redirect(new URL(`/equipo/${id}`, request.url));
+    return NextResponse.redirect(new URL(`/equipo?id=${encodeURIComponent(id)}`, request.url));
   }
 
   const payload = await getPayload(request);

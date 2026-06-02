@@ -1,0 +1,27 @@
+# Deploy app completa (catálogo + login + admin) en Render.com
+# Dashboard → New → Blueprint → conectar repo fuzz_equipamientos
+
+services:
+  - type: web
+    name: fuzz-equipamientos
+    runtime: node
+    rootDir: web
+    plan: free
+    buildCommand: npm ci && npx prisma generate && npx prisma migrate deploy && npm run db:seed && npm run build:production
+    startCommand: npm run start:production
+    healthCheckPath: /
+    disk:
+      name: fuzz-sqlite
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        value: file:/data/dev.db
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: FUZZ_WHATSAPP
+        sync: false
+      - key: HOSTNAME
+        value: "0.0.0.0"

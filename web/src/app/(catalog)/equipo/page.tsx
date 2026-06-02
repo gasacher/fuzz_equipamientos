@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { CatalogProduct } from "@/components/catalog/CatalogProduct";
 import { fetchCatalogProduct } from "@/lib/catalog-store";

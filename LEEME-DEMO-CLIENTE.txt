@@ -1,0 +1,33 @@
+FUZZ — MOSTRAR TODO AL CLIENTE
+=============================
+
+OPCIÓN A — En tu Mac (5 minutos, sin internet público)
+------------------------------------------------------
+1. Doble clic: Mostrar-FUZZ-Cliente.command
+2. Se abre http://localhost:3000/login
+3. Entrá con:
+   Email:    admin@fuzz.com
+   Clave:    admin123
+4. Mostrá el panel (/admin), inventario, ventas.
+5. Abrí otra pestaña: http://localhost:3000 (catálogo público).
+
+Si la reunión es por Zoom/Meet, compartís pantalla con esas pestañas.
+
+
+OPCIÓN B — Link público con app COMPLETA (Render, ~15 min)
+----------------------------------------------------------
+GitHub Pages NO tiene login. Para URL con login:
+
+1. Entrá a https://dashboard.render.com
+2. New → Blueprint → repo fuzz_equipamientos
+3. Aceptá el deploy (archivo render.yaml del repo).
+4. Cuando termine, copiá la URL (ej. https://fuzz-equipamientos.onrender.com)
+5. Login: esa URL + /login (mismas credenciales demo).
+
+Detalle: docs/DEPLOY-COMPLETO.md
+
+
+IMPORTANTE
+----------
+https://gasacher.github.io/fuzz_equipamientos/login  → NO funciona (solo catálogo).
+Usá local (Opción A) o Render (Opción B) para el panel admin.

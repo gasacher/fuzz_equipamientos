@@ -13,7 +13,22 @@ Para ver **login + panel + inventario** en internet hace falta un hosting con se
 
 ---
 
-## Opción recomendada: Railway (app completa)
+## Opción más rápida: Render (recomendado)
+
+El repo incluye `render.yaml`. Pasos:
+
+1. [dashboard.render.com](https://dashboard.render.com) → iniciar sesión con GitHub.
+2. **New** → **Blueprint** → elegí el repo `fuzz_equipamientos`.
+3. Aplicá el blueprint (crea el servicio con disco para SQLite).
+4. En **Environment**, cargá `FUZZ_WHATSAPP` (tu número).
+5. Esperá el deploy verde → copiá la URL pública.
+6. **Login:** `https://TU-URL.onrender.com/login` — `admin@fuzz.com` / `admin123`.
+
+Opcional: en GitHub Actions / build de Pages, podés setear `NEXT_PUBLIC_FULL_APP_URL` a esa URL para enlazar “Panel admin” desde el catálogo en Pages.
+
+---
+
+## Alternativa: Railway (app completa)
 
 1. Entrá a [railway.app](https://railway.app) e iniciá sesión con GitHub.
 2. **New Project** → **Deploy from GitHub repo** → elegí `fuzz_equipamientos`.

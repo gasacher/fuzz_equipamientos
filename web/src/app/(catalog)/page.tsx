@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { CatalogPageHeader } from "@/components/CatalogPageHeader";
 import { CatalogGrid } from "@/components/catalog/CatalogGrid";
 import { fetchCatalogItems } from "@/lib/catalog-store";
