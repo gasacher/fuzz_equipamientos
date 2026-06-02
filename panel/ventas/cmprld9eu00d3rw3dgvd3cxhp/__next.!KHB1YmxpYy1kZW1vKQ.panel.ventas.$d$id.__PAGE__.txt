@@ -1,0 +1,7 @@
+1:"$Sreact.fragment"
+2:I[8500,["500","static/chunks/500-c99b8dfd3de17c86.js","966","static/chunks/app/(public-demo)/panel/ventas/%5Bid%5D/page-03426eca6a310ee4.js"],""]
+3:I[845,["500","static/chunks/500-c99b8dfd3de17c86.js","966","static/chunks/app/(public-demo)/panel/ventas/%5Bid%5D/page-03426eca6a310ee4.js"],"SaleForm"]
+4:I[484,[],"OutletBoundary"]
+5:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","div",null,{"className":"space-y-4","children":[["$","$L2",null,{"href":"/panel/ventas","className":"text-sm text-[#9c9c9c] hover:text-white","children":"← Ventas"}],["$","p",null,{"className":"rounded-lg border border-[#e50914]/40 bg-[#1a0a0a] px-4 py-3 text-sm text-[#f2f2f2]","children":"Vista de presentación: el formulario es el mismo que en el sistema real. Al guardar volvés al listado; en esta URL los datos no se persisten."}],["$","$L3",null,{"demoMode":true,"listHref":"/panel/ventas","initial":{"id":"cmprld9eu00d3rw3dgvd3cxhp","historias":"-","dia":"ef","titulo":"Epiphone Riviera","precioVentaUsd":1100,"porcentajeComision":0.1,"totalComisionFuzz":110,"mes":"ENERO","comKar":11,"comLean":11,"comFuzz":88,"anio":2026}}]]}],null,["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"uSnRUiZu2KWIDXXMzVzWD"}
+6:null

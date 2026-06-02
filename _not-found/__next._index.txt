@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[7121,[],""]
+3:I[4581,[],""]
+:HL["/fuzz_equipamientos/_next/static/css/d73858b22fe7d535.css","style"]
+0:{"rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/fuzz_equipamientos/_next/static/css/d73858b22fe7d535.css","precedence":"next"}]],["$","html",null,{"lang":"es","className":"h-full","children":["$","body",null,{"className":"min-h-full","children":["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"uSnRUiZu2KWIDXXMzVzWD"}
