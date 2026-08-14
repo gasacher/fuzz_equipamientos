@@ -5,7 +5,6 @@ import { adminDemo } from "@/lib/demo-admin";
 import { countDemoAppointmentsPending } from "@/lib/demo-appointments";
 import { countPendingAlerts, getDemoClients } from "@/lib/demo-features";
 import { appPath } from "@/lib/site-path";
-import { panelDemoPath } from "@/lib/panel-demo-path";
 import { useMemo } from "react";
 
 export function DemoPanelDashboard() {
@@ -27,7 +26,7 @@ export function DemoPanelDashboard() {
 
       <DashboardPillars
         pathPrefix="/panel"
-        catalogHref={panelDemoPath("/catalogo")}
+        catalogHref={appPath("/catalogo")}
         showroomHref={appPath("/showroom")}
         stats={{
           clients: clients.length,

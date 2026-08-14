@@ -21,7 +21,7 @@ export default function PublicDemoLayout({ children }: { children: React.ReactNo
       <FuzzDashboardNav
         hubHref={panelDemoPath()}
         homeHref={appPath("/")}
-        catalogHref={panelDemoPath("/catalogo")}
+        catalogHref={appPath("/catalogo")}
         demo
       />
       <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
