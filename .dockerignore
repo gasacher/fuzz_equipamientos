@@ -1,0 +1,14 @@
+.git
+.github
+web/node_modules
+web/.next
+web/out
+web/.gh-pages-stash
+web/uploads
+web/dev.db
+web/.env
+web/.env.local
+Fuzz Backline
+docs
+*.md
+.DS_Store

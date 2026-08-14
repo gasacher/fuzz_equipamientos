@@ -1,27 +1,39 @@
-# Deploy app completa (catálogo + login + admin) en Render.com
-# Dashboard → New → Blueprint → conectar repo fuzz_equipamientos
+# App completa (catálogo + login + admin) en Render.
+# Dashboard → New → Blueprint → repo fuzz_equipamientos
+#
+# Importante: el plan Starter (~USD 7/mes) es obligatorio.
+# El plan free no puede guardar SQLite ni recibos/contratos.
 
 services:
   - type: web
     name: fuzz-equipamientos
     runtime: node
-    rootDir: web
-    plan: free
-    buildCommand: npm ci && npx prisma generate && npx prisma migrate deploy && npm run db:seed && npm run build:production
-    startCommand: npm run start:production
+    plan: starter
+    buildCommand: cd web && npm ci && npx prisma generate && npm run build
+    startCommand: cd web && npm run start:production
     healthCheckPath: /
     disk:
-      name: fuzz-sqlite
+      name: fuzz-data
       mountPath: /data
       sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: "22"
+      - key: NODE_ENV
+        value: production
       - key: DATABASE_URL
         value: file:/data/dev.db
+      - key: UPLOAD_DIR
+        value: /data/uploads
       - key: AUTH_SECRET
         generateValue: true
-      - key: FUZZ_WHATSAPP
-        sync: false
       - key: HOSTNAME
         value: "0.0.0.0"
+      - key: FUZZ_WHATSAPP
+        sync: false
+      - key: ADMIN_EMAIL
+        value: admin@fuzz.com
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: APPOINTMENT_NOTIFY_EMAIL
+        sync: false

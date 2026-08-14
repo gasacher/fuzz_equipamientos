@@ -1,0 +1,199 @@
+{
+  "statusLabels": {
+    "ingresado": "Ingresado",
+    "pendiente_foto": "Pendiente de foto",
+    "foteado": "Foteado",
+    "publicado": "Publicado",
+    "en_showroom": "En showroom",
+    "con_cliente": "Con el cliente",
+    "vendido": "Vendido",
+    "entregado": "Entregado"
+  },
+  "clients": [
+    {
+      "id": "cli-panzoni",
+      "clientNumber": "FUZZ-0012",
+      "name": "Panzoni",
+      "phone": "+54 11 4567-8901",
+      "email": "contacto@panzoni.com.ar",
+      "notes": "Consignación habitual. Prefiere publicar con precio en USD. Contactar por WhatsApp antes de mover equipos.",
+      "contactMatch": "Panzoni",
+      "contracts": [
+        { "id": "c1", "title": "Consignación 2025", "signedAt": "2025-01-15", "type": "Consignación" },
+        { "id": "c2", "title": "Anexo showroom", "signedAt": "2025-06-01", "type": "Comodato" }
+      ]
+    },
+    {
+      "id": "cli-horacio",
+      "clientNumber": "FUZZ-0003",
+      "name": "Horacio Castro",
+      "phone": "+54 11 2233-4455",
+      "email": "horacio.castro@email.com",
+      "notes": "Colección amplia de amplis y audio. Revisar estado antes de foteo.",
+      "contactMatch": "Horacio Castro",
+      "contracts": [
+        { "id": "c3", "title": "Consignación amplificadores", "signedAt": "2024-11-20", "type": "Consignación" }
+      ]
+    },
+    {
+      "id": "cli-ornella",
+      "clientNumber": "FUZZ-0007",
+      "name": "Ornella / Sergio",
+      "phone": "+54 11 3344-5566",
+      "email": null,
+      "notes": "Equipos EVH y cajas. Coordinar retiro con Sergio.",
+      "contactMatch": "Ornella/Sergio",
+      "contracts": []
+    },
+    {
+      "id": "cli-moragas",
+      "clientNumber": "FUZZ-0015",
+      "name": "Daniel Moragas",
+      "phone": "+54 11 4455-6677",
+      "email": "dmoragas@email.com",
+      "notes": "Audio hi-fi y home studio. Documentación de origen disponible.",
+      "contactMatch": "Daniel Moragas",
+      "contracts": [
+        { "id": "c4", "title": "Consignación audio", "signedAt": "2025-03-10", "type": "Consignación" }
+      ]
+    },
+    {
+      "id": "cli-villanova",
+      "clientNumber": "FUZZ-0021",
+      "name": "Andy Villanova",
+      "phone": "+54 11 5566-7788",
+      "email": null,
+      "notes": "Baterías y percusión. Verificar hardware en cada ingreso.",
+      "contactMatch": "Andy Villanova",
+      "contracts": []
+    }
+  ],
+  "traceability": {
+    "cmprld92y0001rw3dnei1pkvl": {
+      "status": "publicado",
+      "location": "Showroom — vitrina 2",
+      "tags": [],
+      "buyer": null,
+      "receipt": null,
+      "history": [
+        { "at": "2025-04-02T10:30:00", "type": "ingreso", "title": "Ingreso al sistema", "detail": "Recibido de Panzoni (FUZZ-0012). Estado: ingresado." },
+        { "at": "2025-04-03T14:00:00", "type": "foto", "title": "Foteado", "detail": "Sesión de fotos en estudio FUZZ." },
+        { "at": "2025-04-04T11:15:00", "type": "publicacion", "title": "Publicado en catálogo web", "detail": "Visible para clientes. USD 170." },
+        { "at": "2025-04-05T09:00:00", "type": "ubicacion", "title": "Ubicación actualizada", "detail": "Showroom — vitrina 2." }
+      ]
+    },
+    "cmprld9d400ckrw3de62kiudv": {
+      "status": "vendido",
+      "location": "Entregado",
+      "tags": ["vendido"],
+      "buyer": "Martín Gómez",
+      "receipt": { "name": "Recibo_venta_Marshall_412.pdf", "date": "2025-05-18" },
+      "history": [
+        { "at": "2024-12-10T09:00:00", "type": "ingreso", "title": "Ingreso", "detail": "Horacio Castro (FUZZ-0003)." },
+        { "at": "2025-01-08T16:00:00", "type": "foto", "title": "Foteado y publicado", "detail": "Catálogo web activo." },
+        { "at": "2025-05-15T12:00:00", "type": "ubicacion", "title": "En showroom", "detail": "Piso principal — zona amplis." },
+        { "at": "2025-05-18T18:30:00", "type": "venta", "title": "Vendido", "detail": "Comprador: Martín Gómez. Recibo adjunto." },
+        { "at": "2025-05-20T11:00:00", "type": "entrega", "title": "Entregado", "detail": "Retiro en showroom. Operación cerrada." }
+      ]
+    },
+    "cmprld9300002rw3dfxawr78j": {
+      "status": "pendiente_foto",
+      "location": "Depósito — estante B",
+      "tags": ["falta_foto", "urgente"],
+      "daysPending": 16,
+      "buyer": null,
+      "receipt": null,
+      "history": [
+        { "at": "2025-05-14T10:00:00", "type": "ingreso", "title": "Ingreso", "detail": "Panzoni (FUZZ-0012). Borrador interno." },
+        { "at": "2025-05-14T10:05:00", "type": "nota", "title": "Pendiente de foto", "detail": "Agendado para próxima sesión de fotos." }
+      ]
+    },
+    "cmprld93f000brw3d82jpyagz": {
+      "status": "con_cliente",
+      "location": "En poder del cliente (comodato)",
+      "tags": ["consignacion"],
+      "buyer": null,
+      "receipt": null,
+      "history": [
+        { "at": "2025-02-01T09:00:00", "type": "ingreso", "title": "Ingreso", "detail": "Ornella/Sergio (FUZZ-0007)." },
+        { "at": "2025-02-10T14:00:00", "type": "foto", "title": "Foteado", "detail": "Fotos para catálogo." },
+        { "at": "2025-02-15T10:00:00", "type": "ubicacion", "title": "Con el cliente", "detail": "Comodato para evento. Retorno estimado 30 días." },
+        { "at": "2025-03-20T09:00:00", "type": "nota", "title": "Seguimiento", "detail": "Cliente confirmó tenencia. Sin novedades." }
+      ]
+    },
+    "cmprld95d0024rw3d7wp965u7": {
+      "status": "en_showroom",
+      "location": "Showroom — sala audio",
+      "tags": ["revisar_precio"],
+      "buyer": null,
+      "receipt": null,
+      "history": [
+        { "at": "2025-03-05T11:00:00", "type": "ingreso", "title": "Ingreso", "detail": "Daniel Moragas (FUZZ-0015)." },
+        { "at": "2025-03-12T15:00:00", "type": "publicacion", "title": "Publicado", "detail": "Catálogo web." },
+        { "at": "2025-04-01T09:00:00", "type": "ubicacion", "title": "Showroom sala audio", "detail": "Demostración activa." }
+      ]
+    },
+    "cmprld95w002srw3d6n2yg4uf": {
+      "status": "foteado",
+      "location": "Depósito — pendiente publicar",
+      "tags": ["pendiente_publicar"],
+      "daysPending": 9,
+      "buyer": null,
+      "receipt": null,
+      "history": [
+        { "at": "2025-05-20T10:00:00", "type": "ingreso", "title": "Ingreso", "detail": "Andy Villanova (FUZZ-0021)." },
+        { "at": "2025-05-22T14:00:00", "type": "foto", "title": "Foteado", "detail": "Fotos listas. Falta definir precio final." }
+      ]
+    }
+  },
+  "pendingQueue": [
+    {
+      "instrumentId": "cmprld9300002rw3dfxawr78j",
+      "status": "pendiente_foto",
+      "tags": ["falta_foto", "urgente"],
+      "daysSince": 16,
+      "alert": "critical",
+      "note": "Sin foto desde el ingreso"
+    },
+    {
+      "instrumentId": "cmprld95w002srw3d6n2yg4uf",
+      "status": "foteado",
+      "tags": ["pendiente_publicar"],
+      "daysSince": 9,
+      "alert": "warning",
+      "note": "Foteado, falta publicar en catálogo"
+    },
+    {
+      "instrumentId": "cmprld9c400axrw3d2si7j80s",
+      "status": "ingresado",
+      "tags": ["borrador", "sin_precio"],
+      "daysSince": 12,
+      "alert": "warning",
+      "note": "Ingreso incompleto — sin precio USD"
+    },
+    {
+      "instrumentId": "cmprld93y000qrw3dvmui40zh",
+      "status": "pendiente_foto",
+      "tags": ["falta_foto"],
+      "daysSince": 8,
+      "alert": "info",
+      "note": "En cola de fotos"
+    },
+    {
+      "instrumentId": "cmprld95c0023rw3d52007hnp",
+      "status": "publicado",
+      "tags": ["revisar_precio"],
+      "daysSince": 21,
+      "alert": "warning",
+      "note": "Publicado hace 21 días sin movimiento"
+    },
+    {
+      "instrumentId": "cmprld9cw00c6rw3d22ci8ltv",
+      "status": "en_showroom",
+      "tags": ["showroom"],
+      "daysSince": 35,
+      "alert": "critical",
+      "note": "En showroom sin movimiento > 30 días"
+    }
+  ]
+}

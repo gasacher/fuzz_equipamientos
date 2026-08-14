@@ -14,7 +14,7 @@ export function InicioPage() {
           <FuzzLogo size="login" href={appPath("/")} />
           <h1 className="fuzz-title mt-6 text-3xl text-white md:text-4xl">FUZZ Equipamientos</h1>
           <p className="mt-3 max-w-lg text-sm text-[#9c9c9c] md:text-base">
-            Elegí qué querés ver: el catálogo para clientes o el panel de gestión interna.
+            Catálogo para clientes y panel de gestión interna.
           </p>
         </div>
       </header>
@@ -29,7 +29,7 @@ export function InicioPage() {
           </span>
           <h2 className="fuzz-title mt-3 text-2xl text-white md:text-3xl">Catálogo web</h2>
           <p className="mt-2 text-sm text-[#9c9c9c]">
-            Instrumentos en venta, precios en USD, filtros y consulta por WhatsApp.
+            Instrumentos en venta, precios en USD y consulta por WhatsApp.
           </p>
           <p className="mt-4 text-sm font-medium text-[#f2f2f2] group-hover:text-[#e50914]">
             Ver catálogo →
@@ -43,12 +43,12 @@ export function InicioPage() {
           <span className="text-xs font-semibold uppercase tracking-wide text-[#e50914]">
             Gestión interna
           </span>
-          <h2 className="fuzz-title mt-3 text-2xl text-white md:text-3xl">Panel admin</h2>
+          <h2 className="fuzz-title mt-3 text-2xl text-white md:text-3xl">Dashboard FUZZ</h2>
           <p className="mt-2 text-sm text-[#9c9c9c]">
-            Stock, ventas y vista del catálogo (demo).
+            Clientes y contratos · inventario con trazabilidad · control de pendientes · ventas.
           </p>
           <p className="mt-4 text-sm font-medium text-[#f2f2f2] group-hover:text-[#e50914]">
-            Ver panel →
+            Abrir panel →
           </p>
         </Link>
       </main>

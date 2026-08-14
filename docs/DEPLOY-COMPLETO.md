@@ -1,100 +1,41 @@
-# Publicar la app completa (como en local)
+# Publicar la app completa (producción)
 
-## Qué es posible en GitHub
+GitHub Pages **no** puede correr login ni base de datos. Para producción (catálogo + panel admin + stock) usamos **Render** con un disco persistente.
 
-| En GitHub | Qué hace |
-|-----------|----------|
-| **Repositorio** (`github.com/gasacher/fuzz_equipamientos`) | Guarda **todo** el código: catálogo, admin, login, Excel. Ya está subido. |
-| **GitHub Pages** (`gasacher.github.io/fuzz_equipamientos`) | Solo el **catálogo estático**. Sin login, sin base de datos, sin Excel en el servidor. |
+Costo aproximado: **USD 7/mes** (plan Starter). El plan free de Render **no sirve**: se apaga, borra SQLite y no guarda recibos ni contratos.
 
-No se puede “subir a GitHub Pages” la misma experiencia que `localhost:3000` con login y admin: GitHub Pages no ejecuta Node ni SQLite.
+## 1. Subir el código a `main`
 
-Para ver **login + panel + inventario** en internet hace falta un hosting con servidor (recomendado: **Railway**, gratis para empezar).
+Render publica la rama por defecto del repo (`main`).
 
----
+## 2. Crear el servicio en Render
 
-## Opción más rápida: Render (recomendado)
-
-El repo incluye `render.yaml`. Pasos:
-
-1. [dashboard.render.com](https://dashboard.render.com) → iniciar sesión con GitHub.
+1. Entrá a [dashboard.render.com](https://dashboard.render.com) e iniciá sesión con GitHub.
 2. **New** → **Blueprint** → elegí el repo `fuzz_equipamientos`.
-3. Aplicá el blueprint (crea el servicio con disco para SQLite).
-4. En **Environment**, cargá `FUZZ_WHATSAPP` (tu número).
-5. Esperá el deploy verde → copiá la URL pública.
-6. **Login:** `https://TU-URL.onrender.com/login` — `admin@fuzz.com` / `admin123`.
+3. Completá las variables que pide:
+   - `FUZZ_WHATSAPP` — número con código país, ej. `54911…`
+   - `ADMIN_PASSWORD` — clave del panel (no dejes `admin123`)
+   - `APPOINTMENT_NOTIFY_EMAIL` — opcional
+4. Aplicá el blueprint (crea el servicio **Starter** + disco de 1 GB en `/data`).
+5. Esperá el deploy verde y copiá la URL (`https://fuzz-equipamientos.onrender.com` o similar).
 
-Opcional: en GitHub Actions / build de Pages, podés setear `NEXT_PUBLIC_FULL_APP_URL` a esa URL para enlazar “Panel admin” desde el catálogo en Pages.
+**Login:** `https://TU-URL.onrender.com/login`  
+Usuario: `admin@fuzz.com` (o el `ADMIN_EMAIL` que hayas puesto).
 
----
+La primera vez importa el Excel y crea el admin. Los deploys siguientes **no** vuelven a borrar el stock.
 
-## Alternativa: Railway (app completa)
+## 3. Qué queda en cada URL
 
-1. Entrá a [railway.app](https://railway.app) e iniciá sesión con GitHub.
-2. **New Project** → **Deploy from GitHub repo** → elegí `fuzz_equipamientos`.
-3. En el servicio, **Settings**:
-   - **Root Directory:** `web`
-   - **Watch Paths:** `web/**` y `FUZZEQUIPAMIENTOS - ADMIN.xlsx`
-4. **Variables** (pestaña Variables):
+| URL | Qué es |
+|-----|--------|
+| Render (`*.onrender.com`) | App completa: catálogo, login, admin, clientes, citas |
+| GitHub Pages | Catálogo estático de demostración |
 
-   | Variable | Valor |
-   |----------|--------|
-   | `DATABASE_URL` | `file:/data/dev.db` |
-   | `AUTH_SECRET` | un texto largo aleatorio (no el de demo) |
-   | `FUZZ_WHATSAPP` | tu número con código país, ej. `54911…` |
+## Alternativa: Railway
 
-5. **Volume** (almacenamiento persistente para la base):
-   - Add Volume → mount path: `/data`
-   - Así la SQLite no se borra en cada deploy.
-
-6. **Build Command** (Settings → Build):
-
-   ```bash
-   npm ci && npx prisma migrate deploy && npm run db:seed && npm run build
-   ```
-
-   (La primera vez crea usuario demo; después podés quitar `db:seed` del build.)
-
-7. **Start Command:**
-
-   ```bash
-   npm run start
-   ```
-
-8. **Networking** → **Generate Domain** → te dan una URL tipo `https://fuzz-equipamientos-production.up.railway.app`
-
-9. Abrí esa URL:
-   - Catálogo: `/`
-   - Login: `/login` (`admin@fuzz.com` / `admin123` — **cambiá la contraseña**)
-
-### Importar Excel en Railway
-
-El archivo `FUZZEQUIPAMIENTOS - ADMIN.xlsx` está en la raíz del repo. Con Root Directory `web`, la ruta por defecto `../FUZZEQUIPAMIENTOS - ADMIN.xlsx` funciona. Si no, definí `EXCEL_PATH` en Variables.
-
----
-
-## Seguir usando GitHub Pages para el catálogo
-
-Podés tener **las dos cosas**:
-
-- **Pages:** catálogo público rápido en `gasacher.github.io/fuzz_equipamientos`
-- **Railway:** app completa con admin (otra URL)
-
-Tras cambios en inventario visible en Railway:
-
-```bash
-cd web
-npm run export:catalog
-git add src/data/catalog.json
-git commit -m "Actualizar catálogo estático"
-git push
-```
-
-Eso actualiza GitHub Pages.
-
----
-
-## Resumen para el cliente
-
-- **Solo comprar / ver precios:** link de GitHub Pages.
-- **Gestión interna (stock, ventas, Excel):** URL de Railway o demo en tu Mac con `Iniciar-FUZZ.command`.
+1. [railway.app](https://railway.app) → **New Project** → repo `fuzz_equipamientos`.
+2. Root Directory: dejar vacío (el start entra a `web`).
+3. Volume en `/data`.
+4. Variables: `DATABASE_URL=file:/data/dev.db`, `UPLOAD_DIR=/data/uploads`, `AUTH_SECRET`, `FUZZ_WHATSAPP`, `ADMIN_PASSWORD`.
+5. Build: `cd web && npm ci && npx prisma generate && npm run build`
+6. Start: `cd web && npm run start:production`

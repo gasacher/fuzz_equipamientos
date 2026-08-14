@@ -1,5 +1,9 @@
 import adminDemo from "@/data/admin-demo.json";
 import { buildTaxonomy, ensureTaxonomyIncludes } from "@/lib/taxonomy";
+import {
+  getGhPagesShowcaseInstrumentIds,
+  getGhPagesShowcaseSaleIds,
+} from "@/lib/demo-features";
 
 export { adminDemo };
 
@@ -20,9 +24,15 @@ export function getDemoSale(id: string) {
 }
 
 export function demoInstrumentStaticParams() {
+  if (process.env.GITHUB_PAGES === "true") {
+    return getGhPagesShowcaseInstrumentIds().map((id) => ({ id }));
+  }
   return adminDemo.instruments.map((i) => ({ id: i.id }));
 }
 
 export function demoSaleStaticParams() {
+  if (process.env.GITHUB_PAGES === "true") {
+    return getGhPagesShowcaseSaleIds().map((id) => ({ id }));
+  }
   return adminDemo.sales.map((s) => ({ id: s.id }));
 }

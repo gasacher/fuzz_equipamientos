@@ -5,12 +5,13 @@ import { appPath, isStaticCatalogSite } from "@/lib/site-path";
 import { panelDemoPath } from "@/lib/panel-demo-path";
 
 type Props = {
-  active: "catalog" | "panel";
+  active: "catalog" | "panel" | "showroom";
 };
 
 export function DemoPublicNav({ active }: Props) {
   const inicioHref = appPath("/");
   const catalogHref = appPath("/catalogo");
+  const showroomHref = appPath("/showroom");
   const panelHref = panelDemoPath();
 
   return (
@@ -31,6 +32,16 @@ export function DemoPublicNav({ active }: Props) {
             }`}
           >
             Catálogo público
+          </Link>
+          <Link
+            href={showroomHref}
+            className={`text-xs md:text-sm ${
+              active === "showroom"
+                ? "font-semibold text-[#e50914]"
+                : "text-[#9c9c9c] hover:text-white"
+            }`}
+          >
+            Agendar visita
           </Link>
           <Link
             href={panelHref}

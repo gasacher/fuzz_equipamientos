@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { toInstrumentData, type InstrumentInput } from "@/lib/instruments";
+import { recordInitialTrace } from "@/lib/instrument-trace";
 import { revalidateClientCatalog } from "@/lib/revalidate-catalog";
 
 export async function GET() {
@@ -28,6 +29,8 @@ export async function GET() {
       imageUrl: i.imageUrl,
       descripcion: i.descripcion,
       visibleInCatalog: i.visibleInCatalog,
+      status: i.status,
+      location: i.location,
     })),
   );
 }
@@ -40,10 +43,26 @@ export async function POST(request: Request) {
   if (!body.categoria?.trim() || !body.titulo?.trim()) {
     return NextResponse.json({ error: "Categoría y título son obligatorios" }, { status: 400 });
   }
+  if (!body.location?.trim()) {
+    return NextResponse.json({ error: "La ubicación es obligatoria" }, { status: 400 });
+  }
 
   const item = await prisma.instrument.create({
     data: toInstrumentData(body),
   });
+
+  await recordInitialTrace(prisma, item.id, {
+    status: body.status ?? "ingresado",
+    location: body.location,
+    buyer: body.buyer,
+    receiptName: body.receiptName,
+    note: body.traceNote,
+    titulo: body.titulo,
+    ig: body.ig,
+    fb: body.fb,
+    ml: body.ml,
+  });
+
   revalidateClientCatalog(item.id);
   return NextResponse.json(item, { status: 201 });
 }

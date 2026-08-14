@@ -15,6 +15,7 @@ export type InstrumentRow = {
   anio: string | null;
   origen: string | null;
   ig: string | null;
+  imageUrl?: string | null;
   clientName?: string | null;
   visibleInCatalog?: boolean;
 };

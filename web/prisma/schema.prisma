@@ -26,42 +26,79 @@ model User {
 
 model Client {
   id           String        @id @default(cuid())
+  clientNumber String?       @unique
   name         String        @unique
   email        String?
   phone        String?
+  notes        String?
   users        User[]
   instruments  Instrument[]
+  contracts    Contract[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
 
+model Contract {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  title     String
+  type      String
+  signedAt  DateTime
+  fileName  String?
+  filePath  String?
+  createdAt DateTime @default(now())
+
+  @@index([clientId])
+}
+
 model Instrument {
-  id           String   @id @default(cuid())
-  historias    String?
-  categoria    String
-  subcategoria String?
-  titulo       String
-  valorUsd     Float?
-  valorArg     Float?
-  contacto     String?
-  fb           Boolean  @default(false)
-  ig           String?
-  ml           Boolean  @default(false)
-  marca        String?
-  anio         String?
-  origen       String?
-  imageUrl     String?
+  id                String             @id @default(cuid())
+  historias         String?
+  categoria         String
+  subcategoria      String?
+  titulo            String
+  valorUsd          Float?
+  valorArg          Float?
+  contacto          String?
+  fb                Boolean            @default(false)
+  ig                String?
+  ml                Boolean            @default(false)
+  marca             String?
+  anio              String?
+  origen            String?
+  imageUrl          String?
   descripcion       String?
-  visibleInCatalog  Boolean  @default(true)
+  visibleInCatalog  Boolean            @default(true)
+  status            String             @default("ingresado")
+  location          String?
+  buyer             String?
+  receiptName       String?
+  receiptPath       String?
   clientId          String?
-  client       Client?  @relation(fields: [clientId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  client            Client?            @relation(fields: [clientId], references: [id])
+  events            InstrumentEvent[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
 
   @@index([categoria])
   @@index([visibleInCatalog])
+  @@index([status])
   @@index([clientId])
   @@index([titulo])
+}
+
+model InstrumentEvent {
+  id           String     @id @default(cuid())
+  instrumentId String
+  instrument   Instrument @relation(fields: [instrumentId], references: [id], onDelete: Cascade)
+  type         String
+  title        String
+  detail       String?
+  createdAt    DateTime   @default(now())
+
+  @@index([instrumentId])
+  @@index([createdAt])
 }
 
 model Sale {
@@ -83,4 +120,20 @@ model Sale {
   @@index([mes])
   @@index([anio])
   @@index([titulo])
+}
+
+model ShowroomAppointment {
+  id           String   @id @default(cuid())
+  visitorName  String
+  phone        String
+  email        String?
+  visitType    String
+  interestNote String?
+  scheduledAt  DateTime
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([scheduledAt])
+  @@index([status])
 }

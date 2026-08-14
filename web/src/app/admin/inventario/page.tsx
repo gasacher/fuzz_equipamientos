@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { InstrumentTable } from "@/components/InstrumentTable";
+import { AdminInventarioTable } from "@/components/AdminInventarioTable";
 import { prisma } from "@/lib/prisma";
 
 export default async function InventarioPage() {
@@ -9,45 +9,36 @@ export default async function InventarioPage() {
 
   const rows = items.map((i) => ({
     id: i.id,
+    titulo: i.titulo,
     categoria: i.categoria,
     subcategoria: i.subcategoria,
-    titulo: i.titulo,
-    valorUsd: i.valorUsd,
-    valorArg: i.valorArg,
     contacto: i.contacto,
-    marca: i.marca,
-    anio: i.anio,
-    origen: i.origen,
+    valorUsd: i.valorUsd,
+    status: i.status,
+    location: i.location,
     ig: i.ig,
+    fb: i.fb,
+    ml: i.ml,
     visibleInCatalog: i.visibleInCatalog,
+    imageUrl: i.imageUrl,
   }));
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <Link href="/admin" className="text-sm text-[#9c9c9c] hover:text-white">
-            ← Panel
-          </Link>
-          <h1 className="fuzz-title mt-2 text-3xl">Stock / Inventario</h1>
-          <p className="text-sm text-[#9c9c9c]">
-            Los cambios se publican al instante en el{" "}
-            <Link href="/admin/catalogo" className="text-[#e50914] hover:underline">
-              catálogo web
-            </Link>{" "}
-            que ven los clientes.
+          <h1 className="fuzz-title text-3xl">Inventario</h1>
+          <p className="mt-2 max-w-xl text-sm text-[#9c9c9c]">
+            Estado, ubicación e historial de cada producto. Los cambios al catálogo web son
+            automáticos.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-        <Link href="/admin/catalogo" className="btn-fuzz-outline">
-          Ver catálogo web
-        </Link>
         <Link href="/admin/inventario/nuevo" className="btn-fuzz">
-          + Nuevo
+          + Ingresar producto
         </Link>
-        </div>
-      </div>
-      <InstrumentTable items={rows} showContact showCatalogStatus admin />
+      </header>
+
+      <AdminInventarioTable items={rows} />
     </div>
   );
 }

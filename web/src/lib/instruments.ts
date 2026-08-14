@@ -18,12 +18,21 @@ export type InstrumentInput = {
   descripcion?: string | null;
   visibleInCatalog?: boolean;
   clientId?: string | null;
+  status?: string;
+  location?: string | null;
+  buyer?: string | null;
+  receiptName?: string | null;
+  traceNote?: string | null;
 };
 
 export function toInstrumentData(input: InstrumentInput): Prisma.InstrumentCreateInput {
-  const { clientId, ...rest } = input;
+  const { clientId, traceNote: _note, ...rest } = input;
   return {
     ...rest,
+    status: rest.status ?? "ingresado",
+    location: rest.location?.trim() || null,
+    buyer: rest.buyer?.trim() || null,
+    receiptName: rest.receiptName?.trim() || null,
     fb: rest.fb ?? false,
     ml: rest.ml ?? false,
     visibleInCatalog: rest.visibleInCatalog ?? true,

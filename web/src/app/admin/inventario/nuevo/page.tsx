@@ -3,5 +3,5 @@ import { getInstrumentTaxonomy } from "@/lib/get-taxonomy";
 
 export default async function NuevoInstrumentoPage() {
   const taxonomy = await getInstrumentTaxonomy();
-  return <InstrumentForm taxonomy={taxonomy} />;
+  return <InstrumentForm taxonomy={taxonomy} showTraceability />;
 }

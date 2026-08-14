@@ -8,6 +8,12 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const stashDir = path.join(root, ".gh-pages-stash");
 const disabled = [];
 
+async function clearStash() {
+  if (existsSync(stashDir)) {
+    await import("node:fs/promises").then(({ rm }) => rm(stashDir, { recursive: true, force: true }));
+  }
+}
+
 const equipoPage = path.join(root, "src/app/(catalog)/equipo/page.tsx");
 const equipoStatic = path.join(root, "src/app/(catalog)/equipo/page.static.tsx");
 const equipoBackup = path.join(stashDir, "equipo-page.tsx.bak");
@@ -29,6 +35,7 @@ async function restore() {
   }
 }
 
+await clearStash();
 await mkdir(stashDir, { recursive: true });
 if (!existsSync(equipoStatic)) {
   throw new Error("Falta page.static.tsx para export de GitHub Pages");
@@ -36,10 +43,16 @@ if (!existsSync(equipoStatic)) {
 await copyFile(equipoPage, equipoBackup);
 await copyFile(equipoStatic, equipoPage);
 
-await disable("src/app/admin", "src/app/login", "src/app/api", "src/middleware.ts");
+await disable(
+  "src/app/admin",
+  "src/app/login",
+  "src/app/api",
+  "src/middleware.ts",
+  "src/app/(catalog)/equipo/[id]",
+);
 
 try {
-  execSync("npx next build --webpack", {
+  execSync("npx next build", {
     cwd: root,
     stdio: "inherit",
     env: {

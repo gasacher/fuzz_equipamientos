@@ -8,6 +8,8 @@ Fuzz Backline/
 web/node_modules/
 web/.next/
 web/out/
+web/.gh-pages-stash/
+web/uploads/
 web/dev.db
 web/*.db-journal
 web/.env

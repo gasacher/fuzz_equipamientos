@@ -10,10 +10,7 @@ export default function DemoVentasPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <Link href={panelDemoPath()} className="text-sm text-[#9c9c9c] hover:text-white">
-            ← Panel
-          </Link>
-          <h1 className="fuzz-title mt-2 text-3xl">Ventas</h1>
+          <h1 className="fuzz-title text-3xl">Ventas</h1>
           <p className="text-sm text-[#9c9c9c]">
             Listado completo con filtros y totales (hoja VENTAS del Excel).
           </p>

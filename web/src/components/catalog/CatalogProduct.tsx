@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getInstrumentImage, isExternalImage } from "@/lib/catalog-images";
 import { formatCatalogPrice, formatUsd } from "@/lib/format-price";
+import { appPath } from "@/lib/site-path";
 import { WhatsAppButton } from "./WhatsAppButton";
 
 export type ProductData = {
@@ -116,12 +117,18 @@ export function CatalogProduct({
             </table>
           )}
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <WhatsAppButton titulo={product.titulo} precio={priceLabel} />
+            <Link
+              href={`${appPath("/showroom")}?interes=${encodeURIComponent(product.titulo)}`}
+              className="btn-fuzz-outline inline-flex items-center justify-center px-6 py-3 text-center text-base font-semibold"
+            >
+              Agendar visita al showroom
+            </Link>
           </div>
 
           <p className="mt-3 text-xs text-[#9c9c9c]">
-            Precios del inventario. Consultá por formas de pago y envío.
+            Precios del inventario. Lun–vie 11–19 h podés ver equipos en el local.
           </p>
         </div>
       </div>

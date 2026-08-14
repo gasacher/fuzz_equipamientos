@@ -1,27 +1,16 @@
-FUZZ — UN SOLO LINK PARA EL CLIENTE
-==================================
+FUZZ — DEMO LOCAL (dashboard completo)
+======================================
 
-Enviá solo esta URL:
+cd ~/Documents/Fuzz_Stock/web
+npm run local
 
-   https://gasacher.github.io/fuzz_equipamientos/
+→ http://localhost:3000/panel          Dashboard (clientes, inventario, pendientes, ventas)
+→ http://localhost:3000/panel/clientes Perfiles de cliente
+→ http://localhost:3000/panel/inventario Trazabilidad por producto
+→ http://localhost:3000/panel/pendientes Control interno
+→ http://localhost:3000/panel/ventas   Ventas (Excel)
 
-Ahí elige:
-   · Catálogo web (lo que ven los compradores)
-   · Panel admin (demo: stock, ventas, Excel)
+Login admin real: http://localhost:3000/login
+  admin@fuzz.com / admin123
 
-Desde catálogo o panel siempre puede volver a Inicio.
-
-
-TEXTO WHATSAPP
---------------
-Hola! Te paso el sistema FUZZ para que lo veas:
-
-https://gasacher.github.io/fuzz_equipamientos/
-
-En la pantalla de inicio elegís Catálogo web o Panel admin.
-Cualquier duda, avisame.
-
-
-PANEL REAL (solo vos)
----------------------
-Mostrar-FUZZ-Cliente.command → http://localhost:3000/login
+Link público: https://gasacher.github.io/fuzz_equipamientos/

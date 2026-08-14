@@ -1,88 +1,59 @@
-import Link from "next/link";
-import { AdminHubCards } from "@/components/AdminHubCards";
-import { ImportExcelButton } from "@/components/ImportExcelButton";
-import { SalesMonthSummary } from "@/components/SalesMonthSummary";
-import { aggregateSalesByMonth } from "@/lib/sales-stats";
+import { DashboardPillars } from "@/components/DashboardPillars";
+import { countPendingAlerts, computePendingQueue } from "@/lib/internal-control";
 import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic";
-
 export default async function AdminDashboardPage() {
-  const [stockTotal, stockPublished, salesRows, salesAgg] = await Promise.all([
+  const [clientCount, instrumentCount, salesCount, appointmentsPending, instruments] =
+    await Promise.all([
+    prisma.client.count(),
     prisma.instrument.count(),
-    prisma.instrument.count({ where: { visibleInCatalog: true } }),
-    prisma.sale.findMany({
+    prisma.sale.count(),
+    prisma.showroomAppointment.count({ where: { status: "pending" } }),
+    prisma.instrument.findMany({
       select: {
-        mes: true,
-        precioVentaUsd: true,
-        totalComisionFuzz: true,
-      },
-    }),
-    prisma.sale.aggregate({
-      _sum: {
-        precioVentaUsd: true,
-        totalComisionFuzz: true,
+        id: true,
+        titulo: true,
+        categoria: true,
+        contacto: true,
+        status: true,
+        visibleInCatalog: true,
+        imageUrl: true,
+        valorUsd: true,
+        createdAt: true,
+        updatedAt: true,
       },
     }),
   ]);
 
-  const salesTotalUsd = salesAgg._sum.precioVentaUsd ?? 0;
-  const salesCommission = salesAgg._sum.totalComisionFuzz ?? 0;
-  const salesByMonth = aggregateSalesByMonth(salesRows);
+  const queue = computePendingQueue(instruments);
+  const alerts = countPendingAlerts(queue);
 
   return (
-    <div className="space-y-8">
-      <header>
-        <h1 className="fuzz-title text-3xl">Panel FUZZ</h1>
-        <p className="mt-2 text-[#9c9c9c]">
-          Elegí qué querés actualizar: <strong className="text-[#f2f2f2]">stock</strong> (inventario y
-          catálogo web) o <strong className="text-[#f2f2f2]">ventas</strong> (comisiones y operaciones).
+    <div className="space-y-10">
+      <header className="relative overflow-hidden rounded-2xl border border-[#1c1c1c] bg-gradient-to-br from-[#1a0a0a] via-[#111] to-black p-8 md:p-10">
+        <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#e50914]/10 blur-3xl" />
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#e50914]">Admin FUZZ</p>
+        <h1 className="fuzz-title mt-2 text-3xl text-white md:text-4xl">Dashboard</h1>
+        <p className="mt-3 max-w-xl text-sm text-[#9c9c9c] md:text-base">
+          Elegí una sección para gestionar clientes, inventario, pendientes, ventas o citas al
+          showroom.
         </p>
       </header>
 
-      <AdminHubCards
-        stockTotal={stockTotal}
-        stockPublished={stockPublished}
-        salesCount={salesRows.length}
-        salesTotalUsd={salesTotalUsd}
-        salesCommission={salesCommission}
+      <DashboardPillars
+        pathPrefix="/admin"
+        catalogHref="/admin/catalogo"
+        showroomHref="/showroom"
+        stats={{
+          clients: clientCount,
+          instruments: instrumentCount,
+          pendingTotal: alerts.total,
+          pendingCritical: alerts.critical,
+          salesCount,
+          appointmentsPending,
+          traceabilityReady: true,
+        }}
       />
-
-      {salesRows.length > 0 && (
-        <section className="fuzz-card p-4">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#9c9c9c]">
-            Resumen ventas
-          </h2>
-          <SalesMonthSummary data={salesByMonth} />
-        </section>
-      )}
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Link href="/admin/catalogo" className="fuzz-card block p-4 transition hover:border-[#e50914]">
-          <h3 className="font-semibold text-white">Vista catálogo web</h3>
-          <p className="mt-1 text-sm text-[#9c9c9c]">Previsualizá lo que ven los clientes ({stockPublished} ítems)</p>
-        </Link>
-        <div className="fuzz-card p-4">
-          <h3 className="font-semibold text-white">Acceso rápido</h3>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <Link href="/admin/inventario/nuevo" className="btn-fuzz-outline text-xs">
-              + Stock
-            </Link>
-            <Link href="/admin/ventas/nuevo" className="btn-fuzz-outline text-xs">
-              + Venta
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <section className="fuzz-card space-y-3 p-6">
-        <h2 className="fuzz-title text-lg">Importar desde Excel</h2>
-        <p className="text-sm text-[#9c9c9c]">
-          Actualiza <strong>STOCK</strong> (inventario + catálogo) y <strong>VENTAS</strong> desde{" "}
-          <strong>FUZZEQUIPAMIENTOS - ADMIN.xlsx</strong> en la carpeta del proyecto.
-        </p>
-        <ImportExcelButton />
-      </section>
     </div>
   );
 }

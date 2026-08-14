@@ -11,19 +11,27 @@ const adapter = new PrismaBetterSqlite3({
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  const existingAdmin = await prisma.user.findFirst({ where: { role: "ADMIN" } });
+  if (existingAdmin) {
+    console.log("Base ya inicializada; no se vuelve a importar el Excel.");
+    return;
+  }
+
   const excelPath =
     process.env.EXCEL_PATH ??
     path.resolve(__dirname, "../../FUZZEQUIPAMIENTOS - ADMIN.xlsx");
 
-  await prisma.user.deleteMany();
-  await prisma.client.deleteMany();
-
   const { stock, ventas } = await importFullExcel(prisma, excelPath);
 
-  const adminHash = await bcrypt.hash("admin123", 10);
+  const adminPassword = process.env.ADMIN_PASSWORD ?? "admin123";
+  if (process.env.NODE_ENV === "production" && !process.env.ADMIN_PASSWORD) {
+    console.warn("ADMIN_PASSWORD no está definido; usando la clave demo. Cambiala después del primer acceso.");
+  }
+
+  const adminHash = await bcrypt.hash(adminPassword, 10);
   await prisma.user.create({
     data: {
-      email: "admin@fuzz.com",
+      email: (process.env.ADMIN_EMAIL ?? "admin@fuzz.com").toLowerCase().trim(),
       name: "Administrador FUZZ",
       passwordHash: adminHash,
       role: "ADMIN",
@@ -32,8 +40,7 @@ async function main() {
 
   console.log(`Stock: ${stock.imported} instrumentos (${stock.clients} contactos).`);
   console.log(`Ventas: ${ventas.imported} registros.`);
-  console.log("Admin: admin@fuzz.com / admin123");
-  console.log("Catálogo público: http://localhost:3000/");
+  console.log(`Admin: ${process.env.ADMIN_EMAIL ?? "admin@fuzz.com"}`);
 }
 
 main()
