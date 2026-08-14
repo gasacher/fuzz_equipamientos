@@ -93,6 +93,7 @@ export function CatalogGrid({
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
   const [marca, setMarca] = useState("");
+  const [stockOpen, setStockOpen] = useState(!showFeatured);
 
   const categories = useMemo(() => {
     const counts = new Map<string, number>();
@@ -150,78 +151,102 @@ export function CatalogGrid({
         </section>
       )}
 
-      <section className="space-y-6">
-        {browsingAll && (
+      <section className="overflow-hidden rounded-xl border border-[#1c1c1c] bg-[#0a0a0a]">
+        <button
+          type="button"
+          onClick={() => setStockOpen((open) => !open)}
+          aria-expanded={stockOpen}
+          className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition hover:bg-white/[0.03] md:px-6"
+        >
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#e50914]">
               Catálogo
             </p>
             <h2 className="fuzz-title mt-1 text-2xl text-white">Todo el stock visible</h2>
           </div>
-        )}
-
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setCat("")}
-            className={`rounded-full border px-3 py-1.5 text-xs transition ${
-              !cat
-                ? "border-[#e50914] bg-[#1a0a0a] text-white"
-                : "border-[#1c1c1c] text-[#9c9c9c] hover:border-[#333] hover:text-white"
-            }`}
-          >
-            Todas · {items.length}
-          </button>
-          {categories.map(([name, count]) => (
-            <button
-              type="button"
-              key={name}
-              onClick={() => setCat(name === cat ? "" : name)}
-              className={`rounded-full border px-3 py-1.5 text-xs transition ${
-                cat === name
-                  ? "border-[#e50914] bg-[#1a0a0a] text-white"
-                  : "border-[#1c1c1c] text-[#9c9c9c] hover:border-[#333] hover:text-white"
-              }`}
+          <span className="flex shrink-0 items-center gap-2 text-sm text-[#9c9c9c]">
+            {items.length} equipos
+            <svg
+              className={`h-5 w-5 text-[#e50914] transition-transform ${stockOpen ? "rotate-180" : ""}`}
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden
             >
-              {name} · {count}
-            </button>
-          ))}
-        </div>
+              <path
+                fillRule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <label className="block space-y-1 lg:col-span-2">
-            <span className="text-xs text-[#9c9c9c]">Buscar</span>
-            <input
-              className="fuzz-input"
-              placeholder="Modelo, marca, categoría…"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
-          </label>
-          <label className="block space-y-1">
-            <span className="text-xs text-[#9c9c9c]">Marca</span>
-            <select className="fuzz-input" value={marca} onChange={(e) => setMarca(e.target.value)}>
-              <option value="">Todas</option>
-              {marcas.map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
+        {stockOpen && (
+          <div className="space-y-6 border-t border-white/10 px-4 py-6 md:px-6">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setCat("")}
+                className={`rounded-full border px-3 py-1.5 text-xs transition ${
+                  !cat
+                    ? "border-[#e50914] bg-[#1a0a0a] text-white"
+                    : "border-[#1c1c1c] text-[#9c9c9c] hover:border-[#333] hover:text-white"
+                }`}
+              >
+                Todas · {items.length}
+              </button>
+              {categories.map(([name, count]) => (
+                <button
+                  type="button"
+                  key={name}
+                  onClick={() => setCat(name === cat ? "" : name)}
+                  className={`rounded-full border px-3 py-1.5 text-xs transition ${
+                    cat === name
+                      ? "border-[#e50914] bg-[#1a0a0a] text-white"
+                      : "border-[#1c1c1c] text-[#9c9c9c] hover:border-[#333] hover:text-white"
+                  }`}
+                >
+                  {name} · {count}
+                </button>
               ))}
-            </select>
-          </label>
-        </div>
+            </div>
 
-        <p className="text-sm text-[#9c9c9c]">
-          {filtered.length} de {items.length} equipos
-        </p>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <label className="block space-y-1 lg:col-span-2">
+                <span className="text-xs text-[#9c9c9c]">Buscar</span>
+                <input
+                  className="fuzz-input"
+                  placeholder="Modelo, marca, categoría…"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                />
+              </label>
+              <label className="block space-y-1">
+                <span className="text-xs text-[#9c9c9c]">Marca</span>
+                <select className="fuzz-input" value={marca} onChange={(e) => setMarca(e.target.value)}>
+                  <option value="">Todas</option>
+                  {marcas.map((m) => (
+                    <option key={m} value={m}>
+                      {m}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
 
-        {filtered.length === 0 ? (
-          <p className="py-12 text-center text-[#9c9c9c]">No hay resultados con esos filtros.</p>
-        ) : (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {filtered.map((item) => (
-              <ProductCard key={item.id} item={item} href={`${basePath}?id=${item.id}`} />
-            ))}
+            <p className="text-sm text-[#9c9c9c]">
+              {filtered.length} de {items.length} equipos
+            </p>
+
+            {filtered.length === 0 ? (
+              <p className="py-12 text-center text-[#9c9c9c]">No hay resultados con esos filtros.</p>
+            ) : (
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                {filtered.map((item) => (
+                  <ProductCard key={item.id} item={item} href={`${basePath}?id=${item.id}`} />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </section>
