@@ -7,7 +7,7 @@ import {
   applyDemoClientEdit,
   saveDemoClientEdit,
 } from "@/lib/demo-client-storage";
-import { formatDemoDate } from "@/lib/demo-features";
+import { DemoContractsCard } from "@/components/demo/DemoContractsCard";
 import { panelDemoPath } from "@/lib/panel-demo-path";
 
 type Contract = {
@@ -137,30 +137,11 @@ export function DemoClienteProfile({ client }: Props) {
         </div>
       </form>
 
-      <div className="grid gap-4 md:grid-cols-1">
-        <div className="fuzz-card space-y-3 p-6">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-[#9c9c9c]">Contratos</h2>
-          {client.contracts.length === 0 ? (
-            <p className="text-sm text-[#9c9c9c]">Sin contratos cargados.</p>
-          ) : (
-            <ul className="space-y-3">
-              {client.contracts.map((c) => (
-                <li
-                  key={c.id}
-                  className="flex items-start justify-between gap-3 rounded-lg border border-[#1c1c1c] bg-[#0f0f0f] p-3"
-                >
-                  <div>
-                    <p className="font-medium text-white">{c.title}</p>
-                    <p className="text-xs text-[#9c9c9c]">
-                      {c.type} · {formatDemoDate(`${c.signedAt}T12:00:00`)}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
+      <DemoContractsCard
+        clientId={client.id}
+        clientName={name.trim() || client.name}
+        seed={client.contracts}
+      />
 
       <section className="space-y-4">
         <header>

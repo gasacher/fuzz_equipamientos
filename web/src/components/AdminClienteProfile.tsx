@@ -50,6 +50,10 @@ export function AdminClienteProfile({ client }: Props) {
   const [tab, setTab] = useState<"instrumentos" | "contratos">("instrumentos");
   const [contractFile, setContractFile] = useState<File | null>(null);
   const [contractFileError, setContractFileError] = useState<string>();
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editFile, setEditFile] = useState<File | null>(null);
+  const [editFileError, setEditFileError] = useState<string>();
+  const [editLoading, setEditLoading] = useState(false);
 
   async function onSaveContact(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -102,6 +106,49 @@ export function AdminClienteProfile({ client }: Props) {
     form.reset();
     setContractFile(null);
     setContractFileError(undefined);
+    router.refresh();
+  }
+
+  async function onEditContract(e: React.FormEvent<HTMLFormElement>, contractId: string) {
+    e.preventDefault();
+    setError("");
+    if (editFile) {
+      const fileErr = validateReceiptFile(editFile);
+      if (fileErr) {
+        setEditFileError(fileErr);
+        return;
+      }
+    }
+    setEditLoading(true);
+    const fd = new FormData(e.currentTarget);
+    if (editFile) fd.set("file", editFile);
+    const res = await fetch(`/api/clients/${client.id}/contracts/${contractId}`, {
+      method: "PATCH",
+      body: fd,
+    });
+    setEditLoading(false);
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setError(data.error ?? "No se pudo guardar el contrato");
+      return;
+    }
+    setEditingId(null);
+    setEditFile(null);
+    setEditFileError(undefined);
+    router.refresh();
+  }
+
+  async function onDeleteContract(contractId: string) {
+    setError("");
+    const res = await fetch(`/api/clients/${client.id}/contracts/${contractId}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setError(data.error ?? "No se pudo quitar el contrato");
+      return;
+    }
+    if (editingId === contractId) setEditingId(null);
     router.refresh();
   }
 
@@ -212,24 +259,98 @@ export function AdminClienteProfile({ client }: Props) {
               {client.contracts.map((c) => (
                 <li
                   key={c.id}
-                  className="flex items-start justify-between gap-3 rounded-lg border border-[#1c1c1c] bg-[#0f0f0f] p-3"
+                  className="space-y-3 rounded-lg border border-[#1c1c1c] bg-[#0f0f0f] p-3"
                 >
-                  <div>
-                    <p className="font-medium text-white">{c.title}</p>
-                    <p className="text-xs text-[#9c9c9c]">
-                      {c.type} · {formatDemoDate(c.signedAt)}
-                    </p>
-                    {c.filePath && (
-                      <a
-                        href={contractFilePath(client.id, c.id)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-1 inline-block text-xs text-[#e50914] hover:underline"
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="font-medium text-white">{c.title}</p>
+                      <p className="text-xs text-[#9c9c9c]">
+                        {c.type} · {formatDemoDate(c.signedAt)}
+                      </p>
+                      {c.fileName && (
+                        <p className="mt-1 text-xs text-[#6fcf97]">Archivo: {c.fileName}</p>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {c.filePath ? (
+                        <a
+                          href={contractFilePath(client.id, c.id)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-fuzz text-xs"
+                        >
+                          Ver PDF
+                        </a>
+                      ) : (
+                        <span className="self-center text-xs text-[#9c9c9c]">Sin PDF</span>
+                      )}
+                      <button
+                        type="button"
+                        className="btn-fuzz-outline text-xs"
+                        onClick={() => {
+                          setEditingId(c.id);
+                          setEditFile(null);
+                          setEditFileError(undefined);
+                        }}
                       >
-                        {c.fileName ?? "Ver PDF"}
-                      </a>
-                    )}
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-fuzz-outline text-xs"
+                        onClick={() => onDeleteContract(c.id)}
+                      >
+                        Quitar
+                      </button>
+                    </div>
                   </div>
+                  {editingId === c.id && (
+                    <form
+                      onSubmit={(e) => onEditContract(e, c.id)}
+                      className="space-y-3 border-t border-[#1c1c1c] pt-3"
+                    >
+                      <input
+                        name="title"
+                        required
+                        defaultValue={c.title}
+                        className="fuzz-input"
+                        placeholder="Título"
+                      />
+                      <input
+                        name="type"
+                        defaultValue={c.type}
+                        className="fuzz-input"
+                        placeholder="Tipo"
+                      />
+                      <input
+                        name="signedAt"
+                        type="date"
+                        defaultValue={c.signedAt.slice(0, 10)}
+                        className="fuzz-input"
+                      />
+                      <ContractFileField
+                        fileName={editFile?.name ?? ""}
+                        existingUrl={c.filePath ? contractFilePath(client.id, c.id) : null}
+                        error={editFileError}
+                        onChange={(next) => {
+                          setEditFile(next);
+                          setEditFileError(next ? validateReceiptFile(next) ?? undefined : undefined);
+                        }}
+                      />
+                      <div className="flex flex-wrap gap-2">
+                        <button type="submit" className="btn-fuzz text-xs" disabled={editLoading}>
+                          {editLoading ? "Guardando..." : "Guardar cambios"}
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-fuzz-outline text-xs"
+                          onClick={() => setEditingId(null)}
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </li>
               ))}
             </ul>
