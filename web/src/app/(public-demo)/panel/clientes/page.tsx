@@ -11,6 +11,7 @@ export default function DemoClientesPage() {
         <h1 className="fuzz-title text-2xl text-white md:text-3xl">Clientes</h1>
         <p className="mt-1 text-sm text-[#9c9c9c]">
           Perfil con número de cliente, datos de contacto, contratos e instrumentos vinculados.
+          Entrá a cada cliente con <strong className="text-[#f2f2f2]">Ver perfil</strong>.
         </p>
       </header>
 
