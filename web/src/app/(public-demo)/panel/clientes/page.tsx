@@ -1,6 +1,5 @@
-import { ClientsTable } from "@/components/demo/ClientsTable";
+import { DemoClientsView } from "@/components/demo/DemoClientsView";
 import { getDemoClients } from "@/lib/demo-features";
-import { panelDemoPath } from "@/lib/panel-demo-path";
 
 export default function DemoClientesPage() {
   const clients = getDemoClients();
@@ -10,12 +9,21 @@ export default function DemoClientesPage() {
       <header>
         <h1 className="fuzz-title text-2xl text-white md:text-3xl">Clientes</h1>
         <p className="mt-1 text-sm text-[#9c9c9c]">
-          Perfil con número de cliente, datos de contacto, contratos e instrumentos vinculados.
-          Entrá a cada cliente con <strong className="text-[#f2f2f2]">Ver perfil</strong>.
+          Cada tarjeta es un cliente. Abrí la ficha para ver y editar nombre, teléfono, email,
+          contratos e instrumentos.
         </p>
       </header>
 
-      <ClientsTable clients={clients} clientPath={(id) => panelDemoPath(`/clientes/${id}`)} />
+      <DemoClientsView
+        clients={clients.map((c) => ({
+          id: c.id,
+          name: c.name,
+          clientNumber: c.clientNumber,
+          email: c.email,
+          phone: c.phone,
+          instrumentCount: c.instrumentCount,
+        }))}
+      />
     </div>
   );
 }

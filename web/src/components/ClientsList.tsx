@@ -14,10 +14,12 @@ export type ClientListRow = {
 
 type Props = {
   clients: ClientListRow[];
+  clientHref?: (id: string) => string;
 };
 
-export function ClientsList({ clients }: Props) {
+export function ClientsList({ clients, clientHref }: Props) {
   const [q, setQ] = useState("");
+  const hrefFor = clientHref ?? ((id: string) => `/admin/clientes/${id}`);
 
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
@@ -41,15 +43,15 @@ export function ClientsList({ clients }: Props) {
       />
 
       <p className="text-sm text-[#9c9c9c]">
-        {filtered.length} de {clients.length} clientes · Tocá uno para ver contacto, contratos e
-        instrumentos
+        {filtered.length} de {clients.length} clientes · Abrí la ficha para ver y editar contacto,
+        contratos e instrumentos
       </p>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((c) => (
           <Link
             key={c.id}
-            href={`/admin/clientes/${c.id}`}
+            href={hrefFor(c.id)}
             className="group block rounded-xl border border-[#1c1c1c] bg-[#111] p-5 transition hover:border-[#e50914] hover:shadow-[0_0_32px_-12px_rgba(229,9,20,0.25)]"
           >
             <div className="flex items-start justify-between gap-3">
@@ -68,8 +70,8 @@ export function ClientsList({ clients }: Props) {
                 <span className="text-[10px] uppercase text-[#9c9c9c]">items</span>
               </div>
             </div>
-            <p className="mt-4 text-sm font-medium text-[#f2f2f2] group-hover:text-[#e50914]">
-              Ver cliente →
+            <p className="mt-4 inline-flex items-center rounded-lg border border-[#e50914]/50 bg-[#1a0a0a] px-3 py-1.5 text-sm font-semibold text-[#e50914] group-hover:border-[#e50914]">
+              Abrir ficha →
             </p>
           </Link>
         ))}
