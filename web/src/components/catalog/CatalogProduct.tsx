@@ -72,7 +72,9 @@ export function CatalogProduct({
             </span>
           </div>
           <p className="mt-2 text-xs text-[#9c9c9c]">
-            Imágenes ilustrativas según categoría. Consultá disponibilidad y configuración exacta.
+            {product.imageUrl
+              ? "Foto del equipo. Confirmá estado y accesorios al consultar."
+              : "Imagen de referencia por categoría. Consultá fotos reales y disponibilidad."}
           </p>
           {isHttpUrl(product.ig) && (
             <a
@@ -102,7 +104,7 @@ export function CatalogProduct({
 
           <p className="mt-4 text-[#f2f2f2] leading-relaxed">
             {product.descripcion ??
-              `Instrumento en venta — ${product.categoria}. Consultanos por WhatsApp para coordinar la compra.`}
+              `${product.categoria} en venta. Precio de referencia en USD. Coordinamos por WhatsApp o en el showroom (lun–vie, 11 a 19 h).`}
           </p>
 
           {specs.length > 0 && (

@@ -3,7 +3,8 @@ import { CatalogSiteShell } from "@/components/CatalogSiteShell";
 
 export const metadata: Metadata = {
   title: "Catálogo | FUZZ",
-  description: "Catálogo de instrumentos en venta. Precios de referencia del inventario.",
+  description:
+    "Catálogo FUZZ: instrumentos y backline en venta. Precios en USD, consulta por WhatsApp y visitas al showroom en Buenos Aires.",
 };
 
 export default function CatalogLayout({ children }: { children: React.ReactNode }) {

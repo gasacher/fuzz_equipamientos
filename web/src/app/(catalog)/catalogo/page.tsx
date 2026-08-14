@@ -6,7 +6,7 @@ export default async function CatalogHomePage() {
   const catalog = await fetchCatalogItems();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10">
       <CatalogPageHeader />
 
       {catalog.length === 0 ? (
