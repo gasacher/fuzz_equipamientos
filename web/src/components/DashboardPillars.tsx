@@ -75,7 +75,7 @@ const sections = [
     accent: "from-[#a0a0ff]/20 to-transparent",
     border: "border-[#a0a0ff]/40",
     stat: (s: Props["stats"]) => `${s.appointmentsPending ?? 0}`,
-    statLabel: "pendientes de confirmar",
+    statLabel: "Citas pendientes de confirmar",
     href: (p: string) => `${p}/citas`,
   },
 ] as const;
