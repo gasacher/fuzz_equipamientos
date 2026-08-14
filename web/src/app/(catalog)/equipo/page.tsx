@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CatalogProduct } from "@/components/catalog/CatalogProduct";
+import { CatalogContainer } from "@/components/CatalogContainer";
 import { fetchCatalogProduct } from "@/lib/catalog-store";
 import { appPath } from "@/lib/site-path";
 
@@ -12,12 +13,14 @@ export default async function EquipoPage({ searchParams }: Props) {
 
   if (!id) {
     return (
-      <div className="fuzz-card space-y-4 p-8 text-center">
-        <p className="text-[#9c9c9c]">Producto no encontrado.</p>
-        <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
-          Volver al catálogo
-        </Link>
-      </div>
+      <CatalogContainer>
+        <div className="fuzz-card space-y-4 p-8 text-center">
+          <p className="text-[#9c9c9c]">Producto no encontrado.</p>
+          <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
+            Volver al catálogo
+          </Link>
+        </div>
+      </CatalogContainer>
     );
   }
 
@@ -25,14 +28,20 @@ export default async function EquipoPage({ searchParams }: Props) {
 
   if (!product) {
     return (
-      <div className="fuzz-card space-y-4 p-8 text-center">
-        <p className="text-[#9c9c9c]">Producto no encontrado.</p>
-        <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
-          Volver al catálogo
-        </Link>
-      </div>
+      <CatalogContainer>
+        <div className="fuzz-card space-y-4 p-8 text-center">
+          <p className="text-[#9c9c9c]">Producto no encontrado.</p>
+          <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
+            Volver al catálogo
+          </Link>
+        </div>
+      </CatalogContainer>
     );
   }
 
-  return <CatalogProduct product={product} catalogBasePath={appPath("/catalogo")} />;
+  return (
+    <CatalogContainer>
+      <CatalogProduct product={product} catalogBasePath={appPath("/catalogo")} />
+    </CatalogContainer>
+  );
 }

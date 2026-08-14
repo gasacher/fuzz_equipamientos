@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { CatalogContainer } from "@/components/CatalogContainer";
 import { CatalogProduct } from "@/components/catalog/CatalogProduct";
 import catalogData from "@/data/catalog.json";
 import { appPath } from "@/lib/site-path";
@@ -14,16 +15,22 @@ function ProductContent() {
 
   if (!id || !product) {
     return (
-      <div className="fuzz-card space-y-4 p-8 text-center">
-        <p className="text-[#9c9c9c]">Producto no encontrado.</p>
-        <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
-          Volver al catálogo
-        </Link>
-      </div>
+      <CatalogContainer>
+        <div className="fuzz-card space-y-4 p-8 text-center">
+          <p className="text-[#9c9c9c]">Producto no encontrado.</p>
+          <Link href={appPath("/catalogo")} className="text-[#e50914] hover:underline">
+            Volver al catálogo
+          </Link>
+        </div>
+      </CatalogContainer>
     );
   }
 
-  return <CatalogProduct product={product} catalogBasePath={appPath("/catalogo")} />;
+  return (
+    <CatalogContainer>
+      <CatalogProduct product={product} catalogBasePath={appPath("/catalogo")} />
+    </CatalogContainer>
+  );
 }
 
 export default function EquipoPageStatic() {

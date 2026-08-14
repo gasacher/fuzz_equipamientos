@@ -5,14 +5,15 @@ const LOGO_SRC = withBasePath("/assets/img/logo-fuzz.png");
 
 type Props = {
   /** Barra superior (web + admin) */
-  size?: "bar" | "login";
+  size?: "bar" | "login" | "footer";
   href?: string;
   className?: string;
 };
 
 const sizeClass = {
-  bar: "h-14 w-auto sm:h-16 md:h-[4.5rem]",
+  bar: "h-12 w-auto sm:h-14 md:h-16",
   login: "h-16 w-auto md:h-20",
+  footer: "h-16 w-auto md:h-[4.5rem]",
 } as const;
 
 export function FuzzLogo({ size = "bar", href, className = "" }: Props) {
@@ -21,8 +22,8 @@ export function FuzzLogo({ size = "bar", href, className = "" }: Props) {
     <img
       src={LOGO_SRC}
       alt="FUZZ Equipamientos"
-      width={1024}
-      height={1024}
+      width={868}
+      height={868}
       className={`block object-contain object-left ${sizeClass[size]} ${className}`.trim()}
       decoding="async"
     />

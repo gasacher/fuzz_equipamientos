@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FuzzLogo } from "@/components/FuzzLogo";
+import { FuzzSiteFooter } from "@/components/FuzzSiteFooter";
 import { appPath } from "@/lib/site-path";
 import { panelDemoPath } from "@/lib/panel-demo-path";
 
@@ -71,9 +72,7 @@ export function InicioPage() {
         </Link>
       </main>
 
-      <footer className="border-t border-white/10 py-6 text-center text-xs text-[#9c9c9c]">
-        © FUZZ · Buenos Aires · Vista de presentación
-      </footer>
+      <FuzzSiteFooter note="Vista de presentación" />
     </div>
   );
 }
