@@ -17,17 +17,18 @@ import { panelDemoPath } from "@/lib/panel-demo-path";
 
 type Props = {
   items: InstrumentRow[];
+  mergeSessionNew?: boolean;
 };
 
-export function DemoInventarioTable({ items: staticItems }: Props) {
+export function DemoInventarioTable({ items: staticItems, mergeSessionNew = true }: Props) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [newItems, setNewItems] = useState<InstrumentRow[]>([]);
 
   useEffect(() => {
-    setNewItems(getDemoNewInstruments());
-  }, []);
+    if (mergeSessionNew) setNewItems(getDemoNewInstruments());
+  }, [mergeSessionNew]);
 
   const items = useMemo(() => [...newItems, ...staticItems], [newItems, staticItems]);
 

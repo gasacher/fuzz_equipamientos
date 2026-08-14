@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getInstrumentImage, isExternalImage } from "@/lib/catalog-images";
 import { formatCatalogPrice, formatUsd } from "@/lib/format-price";
 import { appPath } from "@/lib/site-path";
+import { isHttpUrl } from "@/lib/http-url";
 import { WhatsAppButton } from "./WhatsAppButton";
 
 export type ProductData = {
@@ -73,9 +74,9 @@ export function CatalogProduct({
           <p className="mt-2 text-xs text-[#9c9c9c]">
             Imágenes ilustrativas según categoría. Consultá disponibilidad y configuración exacta.
           </p>
-          {product.ig && (
+          {isHttpUrl(product.ig) && (
             <a
-              href={product.ig}
+              href={product.ig!}
               target="_blank"
               rel="noreferrer"
               className="mt-2 inline-block text-sm text-[#e50914] hover:underline"

@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { InstrumentTable, type InstrumentRow } from "@/components/InstrumentTable";
+import { DemoContractsCard } from "@/components/demo/DemoContractsCard";
+import { DemoInventarioTable } from "@/components/demo/DemoInventarioTable";
+import type { InstrumentRow } from "@/components/InstrumentTable";
 import {
   applyDemoClientEdit,
   saveDemoClientEdit,
 } from "@/lib/demo-client-storage";
-import { DemoContractsCard } from "@/components/demo/DemoContractsCard";
 import { panelDemoPath } from "@/lib/panel-demo-path";
 
 type Contract = {
@@ -150,13 +151,7 @@ export function DemoClienteProfile({ client }: Props) {
             {client.instrumentCount} equipos vinculados a {clientNumber || client.clientNumber}
           </p>
         </header>
-        <InstrumentTable
-          items={client.instruments}
-          showContact={false}
-          showCatalogStatus
-          admin
-          pathPrefix={panelDemoPath()}
-        />
+        <DemoInventarioTable items={client.instruments} mergeSessionNew={false} />
       </section>
     </div>
   );

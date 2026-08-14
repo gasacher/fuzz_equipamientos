@@ -109,9 +109,16 @@ export function formatDemoDate(iso: string) {
   });
 }
 
-/** GitHub Pages: solo páginas de ejemplo para la presentación (no las 383+). */
+/** GitHub Pages: instrumentos con ficha (trazabilidad + todos los de clientes demo). */
 export function getGhPagesShowcaseInstrumentIds() {
-  return Object.keys(traceability);
+  const fromTrace = Object.keys(traceability);
+  const fromClients = demoFeatures.clients.flatMap((client) =>
+    adminDemo.instruments
+      .filter((item) => item.contacto === client.contactMatch)
+      .map((item) => item.id),
+  );
+  const fromPending = demoFeatures.pendingQueue.map((item) => item.instrumentId);
+  return [...new Set([...fromTrace, ...fromClients, ...fromPending])];
 }
 
 export function getGhPagesShowcaseSaleIds() {

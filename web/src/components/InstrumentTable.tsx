@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { isHttpUrl } from "@/lib/http-url";
 
 export type InstrumentRow = {
   id: string;
@@ -152,8 +153,8 @@ export function InstrumentTable({
                   </td>
                 )}
                 <td>
-                  {i.ig ? (
-                    <a href={i.ig} target="_blank" rel="noreferrer" className="text-[#e50914]">
+                  {isHttpUrl(i.ig) ? (
+                    <a href={i.ig!} target="_blank" rel="noreferrer" className="text-[#e50914]">
                       Ver
                     </a>
                   ) : (
