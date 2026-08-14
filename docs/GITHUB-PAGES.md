@@ -23,4 +23,6 @@ La rama `gh-pages` la crea automáticamente el workflow al hacer push a `main`. 
 
 ## Login / admin real
 
-No va en Pages. Solo en tu Mac (`Mostrar-FUZZ-Cliente.command`) o en Render (ver DEPLOY-COMPLETO.md).
+No va en Pages. El cliente ve el panel demo en el mismo link.
+
+Cuando quieras el panel de verdad (cargar stock, login) en tu dominio de Hostinger: hPanel → Websites → Add Website → Node.js web app → conectar el repo `fuzz_equipamientos`. En tu Mac: `Mostrar-FUZZ-Cliente.command`.

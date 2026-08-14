@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getDemoBookedHours } from "@/lib/demo-appointments";
+import { isStaticCatalogSite } from "@/lib/site-path";
 import {
   SHOWROOM_SLOT_HOURS,
   formatDateShort,
@@ -28,6 +30,11 @@ export function ShowroomSlotPicker({ date, hour, onDateChange, onHourChange }: P
       return;
     }
     setLoading(true);
+    if (isStaticCatalogSite()) {
+      setBookedHours(getDemoBookedHours(date));
+      setLoading(false);
+      return;
+    }
     fetch(`/api/appointments/slots?date=${encodeURIComponent(date)}`)
       .then((r) => r.json())
       .then((data: { bookedHours?: number[] }) => {

@@ -81,9 +81,7 @@ const sections = [
 ] as const;
 
 export function DashboardPillars({ pathPrefix, stats, catalogHref, showroomHref }: Props) {
-  const visibleSections = sections.filter(
-    (sec) => sec.key !== "citas" || pathPrefix === "/admin",
-  );
+  const visibleSections = sections;
 
   return (
     <div className="space-y-8">

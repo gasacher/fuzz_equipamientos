@@ -5,6 +5,7 @@ import {
   buildAdminContactVisitorUrl,
   type AppointmentNotifyPayload,
 } from "@/lib/appointment-message";
+import { updateDemoAppointmentStatus } from "@/lib/demo-appointments";
 import {
   APPOINTMENT_STATUSES,
   VISIT_TYPES,
@@ -27,6 +28,7 @@ export type AppointmentRow = {
 type Props = {
   appointments: AppointmentRow[];
   onUpdated?: (appointments: AppointmentRow[]) => void;
+  demo?: boolean;
 };
 
 const statusColors: Record<string, string> = {
@@ -35,7 +37,7 @@ const statusColors: Record<string, string> = {
   cancelled: "border-[#333] bg-[#111] text-[#9c9c9c]",
 };
 
-export function AppointmentsTable({ appointments: initial, onUpdated }: Props) {
+export function AppointmentsTable({ appointments: initial, onUpdated, demo }: Props) {
   const [appointments, setAppointments] = useState(initial);
   const [filter, setFilter] = useState<"" | "pending" | "confirmed" | "cancelled">("");
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -47,6 +49,13 @@ export function AppointmentsTable({ appointments: initial, onUpdated }: Props) {
 
   async function updateStatus(id: string, status: string) {
     setLoadingId(id);
+    if (demo) {
+      const next = updateDemoAppointmentStatus(id, status);
+      setAppointments(next);
+      onUpdated?.(next);
+      setLoadingId(null);
+      return;
+    }
     const res = await fetch(`/api/appointments/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },

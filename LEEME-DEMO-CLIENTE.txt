@@ -1,16 +1,22 @@
-FUZZ — DEMO LOCAL (dashboard completo)
-======================================
+FUZZ — LINK PARA EL CLIENTE
+===========================
 
-cd ~/Documents/Fuzz_Stock/web
-npm run local
+Un solo enlace (ya publicado):
 
-→ http://localhost:3000/panel          Dashboard (clientes, inventario, pendientes, ventas)
-→ http://localhost:3000/panel/clientes Perfiles de cliente
-→ http://localhost:3000/panel/inventario Trazabilidad por producto
-→ http://localhost:3000/panel/pendientes Control interno
-→ http://localhost:3000/panel/ventas   Ventas (Excel)
+  https://gasacher.github.io/fuzz_equipamientos/
 
-Login admin real: http://localhost:3000/login
-  admin@fuzz.com / admin123
+Ahí el cliente ve las funcionalidades, sin usuario ni contraseña.
 
-Link público: https://gasacher.github.io/fuzz_equipamientos/
+Recorrido
+---------
+1. Inicio → Catálogo web (precios USD + WhatsApp)
+2. Inicio → Agendar visita (día y horario lun–vie 11–19)
+3. Inicio → Dashboard FUZZ
+4. Clientes → Panzoni (contratos + instrumentos)
+5. Pendientes → alertas
+6. Inventario → abrir un producto (estado, historial, recibo)
+7. Ventas
+8. Citas → confirmar / cancelar la visita agendada
+
+Nota: es una vista de presentación. Cargar stock de verdad
+(login + base de datos) va en Hostinger, con el mismo repo de GitHub.

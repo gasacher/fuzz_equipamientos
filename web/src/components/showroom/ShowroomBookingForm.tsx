@@ -4,9 +4,22 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ShowroomSlotPicker } from "@/components/showroom/ShowroomSlotPicker";
+import {
+  addDemoAppointment,
+  getDemoBookedHours,
+  newDemoAppointmentId,
+} from "@/lib/demo-appointments";
+import { buildVisitorWhatsAppUrl } from "@/lib/appointment-message";
 import { buildWhatsAppConsultUrl } from "@/lib/fuzz";
-import { listBookableDates } from "@/lib/showroom-schedule";
-import { appPath } from "@/lib/site-path";
+import {
+  buildScheduledAt,
+  isBookableDate,
+  isSlotInPast,
+  listBookableDates,
+  type VisitType,
+} from "@/lib/showroom-schedule";
+import { appPath, isStaticCatalogSite } from "@/lib/site-path";
+import { panelDemoPath } from "@/lib/panel-demo-path";
 
 export function ShowroomBookingForm() {
   const searchParams = useSearchParams();
@@ -37,6 +50,43 @@ export function ShowroomBookingForm() {
     }
     setError("");
     setSubmitting(true);
+
+    if (isStaticCatalogSite()) {
+      if (!isBookableDate(date) || isSlotInPast(date, hour)) {
+        setSubmitting(false);
+        setError("Elegí un día y horario disponibles");
+        return;
+      }
+      if (getDemoBookedHours(date).includes(hour)) {
+        setSubmitting(false);
+        setError("Ese horario ya está reservado");
+        return;
+      }
+      const scheduledAt = buildScheduledAt(date, hour);
+      addDemoAppointment({
+        id: newDemoAppointmentId(),
+        visitorName: visitorName.trim(),
+        phone: phone.trim(),
+        email: email.trim() || null,
+        visitType,
+        interestNote: visitType === "interest" ? interestNote.trim() : null,
+        scheduledAt: scheduledAt.toISOString(),
+        status: "pending",
+        createdAt: new Date().toISOString(),
+      });
+      const whatsappUrl = buildVisitorWhatsAppUrl({
+        visitorName: visitorName.trim(),
+        phone: phone.trim(),
+        email: email.trim() || null,
+        visitType: visitType as VisitType,
+        interestNote: visitType === "interest" ? interestNote.trim() : null,
+        scheduledAt,
+      });
+      setSubmitting(false);
+      setDone(true);
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
 
     const res = await fetch("/api/appointments", {
       method: "POST",
@@ -79,6 +129,11 @@ export function ShowroomBookingForm() {
         <Link href={appPath("/catalogo")} className="btn-fuzz-outline inline-block">
           Volver al catálogo
         </Link>
+        {isStaticCatalogSite() && (
+          <Link href={panelDemoPath("/citas")} className="block text-sm text-[#e50914] hover:underline">
+            Ver la cita en el panel →
+          </Link>
+        )}
       </div>
     );
   }

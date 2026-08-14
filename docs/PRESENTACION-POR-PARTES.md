@@ -26,13 +26,22 @@ Publicamos en etapas para que el build sea rápido y estable (~30 s por parte).
 
 ---
 
-## Recorrido sugerido (cuando estén las 4 partes)
+## Parte 5 — Citas showroom
+- Inicio → **Agendar visita** (calendario lun–vie 11–19 h)
+- Desde un producto del catálogo: **Agendar visita al showroom**
+- Panel → **Citas**: calendario, confirmar o cancelar
 
-1. Inicio → Dashboard  
-2. Clientes → Panzoni → instrumentos  
-3. Pendientes → alertas  
-4. Stock → abrir producto con historial  
-5. Ventas → Catálogo web  
+---
+
+## Recorrido sugerido (cuando estén las 5 partes)
+
+1. Inicio → Catálogo  
+2. Agendar visita (elegir día y horario)  
+3. Dashboard → Citas (aparece la reserva)  
+4. Clientes → Panzoni → instrumentos  
+5. Pendientes → alertas  
+6. Stock → abrir producto con historial  
+7. Ventas  
 
 ## Publicar cada parte
 

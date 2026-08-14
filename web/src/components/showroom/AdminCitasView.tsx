@@ -9,15 +9,16 @@ import { AdminAppointmentsCalendar } from "@/components/showroom/AdminAppointmen
 
 type Props = {
   appointments: AppointmentRow[];
+  demo?: boolean;
 };
 
-export function AdminCitasView({ appointments: initial }: Props) {
+export function AdminCitasView({ appointments: initial, demo }: Props) {
   const [appointments, setAppointments] = useState(initial);
 
   return (
     <div className="space-y-8">
       <AdminAppointmentsCalendar appointments={appointments} />
-      <AppointmentsTable appointments={appointments} onUpdated={setAppointments} />
+      <AppointmentsTable appointments={appointments} onUpdated={setAppointments} demo={demo} />
     </div>
   );
 }
