@@ -51,5 +51,5 @@ npm run refresh   # build + servidor estable
 | Archivo / carpeta | Uso |
 |-------------------|-----|
 | `web/` | Aplicación Next.js |
-| `FUZZEQUIPAMIENTOS - ADMIN.xlsx` | Datos para importar (stock + ventas) |
+| Excel local (no está en el repo) | Importación opcional de stock y ventas. El archivo `FUZZEQUIPAMIENTOS - ADMIN.xlsx` está en `.gitignore`; definí `EXCEL_PATH` si lo tenés en otra ruta. Sin ese archivo, el seed crea solo el admin. |
 | `Iniciar-FUZZ.command` | Arranque local en un clic (macOS) |

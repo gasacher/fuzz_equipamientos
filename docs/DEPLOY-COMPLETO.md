@@ -22,7 +22,7 @@ Render publica la rama por defecto del repo (`main`).
 **Login:** `https://TU-URL.onrender.com/login`  
 Usuario: `admin@fuzz.com` (o el `ADMIN_EMAIL` que hayas puesto).
 
-La primera vez importa el Excel y crea el admin. Los deploys siguientes **no** vuelven a borrar el stock.
+La primera vez crea el admin, sin stock ni ventas (el Excel de negocio no viaja en el repo ni en la imagen). Para cargar datos, montá un archivo local y definí `EXCEL_PATH`, o cargá el inventario desde el panel. Los deploys siguientes **no** vuelven a borrar el stock.
 
 ## 3. Qué queda en cada URL
 
