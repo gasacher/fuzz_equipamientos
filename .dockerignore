@@ -12,3 +12,7 @@ Fuzz Backline
 docs
 *.md
 .DS_Store
+FUZZEQUIPAMIENTOS - ADMIN.xlsx
+*.xlsx
+*.xls
+*.csv

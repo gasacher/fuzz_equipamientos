@@ -8,7 +8,7 @@
 ## Requisitos
 
 - Node.js 20+
-- Excel `../FUZZEQUIPAMIENTOS - ADMIN.xlsx` (carpeta padre del repo)
+- Excel opcional y fuera del repo (`EXCEL_PATH`, ver `.env.example`). Sin ese archivo, `db:setup` crea el admin y deja stock y ventas vacíos.
 
 ## Instalación
 

@@ -19,12 +19,12 @@ export function ImportExcelButton() {
     setLoading(true);
     setMsg("");
     const res = await fetch("/api/import", { method: "POST" });
+    const data = await res.json().catch(() => ({}));
     setLoading(false);
     if (!res.ok) {
-      setMsg("Error al importar");
+      setMsg(typeof data.error === "string" ? data.error : "Error al importar");
       return;
     }
-    const data = await res.json().catch(() => ({}));
     setMsg(data.message ?? "Stock y ventas actualizados");
     router.refresh();
   }

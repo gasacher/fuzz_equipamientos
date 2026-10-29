@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { existsSync } from "node:fs";
 import path from "path";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "../src/generated/prisma/client";
@@ -21,7 +22,15 @@ async function main() {
     process.env.EXCEL_PATH ??
     path.resolve(__dirname, "../../FUZZEQUIPAMIENTOS - ADMIN.xlsx");
 
-  const { stock, ventas } = await importFullExcel(prisma, excelPath);
+  if (existsSync(excelPath)) {
+    const { stock, ventas } = await importFullExcel(prisma, excelPath);
+    console.log(`Stock: ${stock.imported} instrumentos (${stock.clients} contactos).`);
+    console.log(`Ventas: ${ventas.imported} registros.`);
+  } else {
+    console.warn(
+      `Excel no encontrado (${excelPath}). Se crea el admin sin importar stock ni ventas. El archivo no está en el repositorio; definí EXCEL_PATH para importar una copia local.`,
+    );
+  }
 
   const adminPassword = process.env.ADMIN_PASSWORD ?? "admin123";
   if (process.env.NODE_ENV === "production" && !process.env.ADMIN_PASSWORD) {
@@ -38,8 +47,6 @@ async function main() {
     },
   });
 
-  console.log(`Stock: ${stock.imported} instrumentos (${stock.clients} contactos).`);
-  console.log(`Ventas: ${ventas.imported} registros.`);
   console.log(`Admin: ${process.env.ADMIN_EMAIL ?? "admin@fuzz.com"}`);
 }
 

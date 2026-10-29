@@ -1,17 +1,28 @@
+import { existsSync } from "node:fs";
+import path from "path";
 import { NextResponse } from "next/server";
 import { requireSession } from "@/lib/auth";
 import { importFullExcel } from "@/lib/import-excel";
 import { revalidateClientCatalog } from "@/lib/revalidate-catalog";
 import { prisma } from "@/lib/prisma";
-import path from "path";
 
 export async function POST() {
   const session = await requireSession("ADMIN");
   if (!session) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
+  const excelPath =
+    process.env.EXCEL_PATH ?? path.resolve(process.cwd(), "../FUZZEQUIPAMIENTOS - ADMIN.xlsx");
+  if (!existsSync(excelPath)) {
+    return NextResponse.json(
+      {
+        error:
+          "No hay un Excel para importar. Definí EXCEL_PATH con un archivo local (no se versiona en el repositorio).",
+      },
+      { status: 400 },
+    );
+  }
+
   try {
-    const excelPath =
-      process.env.EXCEL_PATH ?? path.resolve(process.cwd(), "../FUZZEQUIPAMIENTOS - ADMIN.xlsx");
     const result = await importFullExcel(prisma, excelPath);
     revalidateClientCatalog();
     return NextResponse.json({
