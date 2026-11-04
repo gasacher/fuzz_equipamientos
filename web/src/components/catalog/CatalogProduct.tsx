@@ -4,6 +4,7 @@ import { getInstrumentImage, isExternalImage } from "@/lib/catalog-images";
 import { formatCatalogPrice, formatUsd } from "@/lib/format-price";
 import { appPath } from "@/lib/site-path";
 import { isHttpUrl } from "@/lib/http-url";
+import { CatalogPhotoGallery } from "./CatalogPhotoGallery";
 import { WhatsAppButton } from "./WhatsAppButton";
 
 export type ProductData = {
@@ -16,6 +17,10 @@ export type ProductData = {
   origen: string | null;
   descripcion: string | null;
   imageUrl: string | null;
+  /** Fotos del post cuando hay más de una. Si falta, la ficha muestra una sola imagen. */
+  galleryUrls?: string[];
+  /** Índice inicial dentro de galleryUrls. */
+  galleryIndex?: number;
   ig: string | null;
   valorUsd: number | null;
 };
@@ -42,6 +47,8 @@ export function CatalogProduct({
   catalogBasePath?: string;
 }) {
   const imageSrc = getInstrumentImage(product.categoria, product.imageUrl);
+  const gallery = (product.galleryUrls ?? []).map((url) => url.trim()).filter(Boolean);
+  const showGallery = gallery.length > 1;
   const tags = [product.categoria, product.subcategoria, product.marca, product.anio].filter(Boolean);
 
   const specs: [string, string][] = [];
@@ -64,16 +71,26 @@ export function CatalogProduct({
       </nav>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        <div>
-          <div className="relative overflow-hidden rounded-xl border border-[#1f1f1f] bg-[#0f0f0f]">
-            <ProductImage src={imageSrc} alt={product.titulo} priority />
-            <span className="absolute left-3 top-3 rounded bg-[#e50914] px-2 py-0.5 text-[10px] font-semibold uppercase text-white">
-              Venta
-            </span>
-          </div>
+        <div className="min-w-0">
+          {showGallery ? (
+            <CatalogPhotoGallery
+              photos={gallery}
+              alt={product.titulo}
+              initialIndex={product.galleryIndex}
+            />
+          ) : (
+            <div className="relative overflow-hidden rounded-xl border border-[#1f1f1f] bg-[#0f0f0f]">
+              <ProductImage src={imageSrc} alt={product.titulo} priority />
+              <span className="absolute left-3 top-3 rounded bg-[#e50914] px-2 py-0.5 text-[10px] font-semibold uppercase text-white">
+                Venta
+              </span>
+            </div>
+          )}
           <p className="mt-2 text-xs text-[#9c9c9c]">
             {product.imageUrl
-              ? "Foto del equipo. Confirmá estado y accesorios al consultar."
+              ? showGallery
+                ? "Fotos del equipo. Confirmá estado y accesorios al consultar."
+                : "Foto del equipo. Confirmá estado y accesorios al consultar."
               : "Imagen de referencia por categoría. Consultá fotos reales y disponibilidad."}
           </p>
           {isHttpUrl(product.ig) && (
@@ -102,7 +119,7 @@ export function CatalogProduct({
             ))}
           </div>
 
-          <p className="mt-4 text-[#f2f2f2] leading-relaxed">
+          <p className="mt-4 whitespace-pre-line text-[#f2f2f2] leading-relaxed">
             {product.descripcion ??
               `${product.categoria} en venta. Precio de referencia en USD. Coordinamos por WhatsApp o en el showroom (lun–vie, 11 a 19 h).`}
           </p>

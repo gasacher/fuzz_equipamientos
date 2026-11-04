@@ -32,13 +32,18 @@ export async function fetchCatalogItems(): Promise<CatalogItem[]> {
   const { prisma } = await import("@/lib/prisma");
   const { catalogWhere } = await import("@/lib/catalog-visibility");
   const { toCatalogItems } = await import("@/lib/catalog");
+  const { applyInstagramImageFallback } = await import("@/lib/instagram-media.server");
 
   const items = await prisma.instrument.findMany({
     where: catalogWhere,
     orderBy: { titulo: "asc" },
   });
 
-  return toCatalogItems(items);
+  const catalog = toCatalogItems(items);
+  return applyInstagramImageFallback(
+    catalog,
+    items.map((item) => item.ig),
+  );
 }
 
 export async function fetchCatalogProduct(id: string): Promise<ProductData | null> {
@@ -49,10 +54,13 @@ export async function fetchCatalogProduct(id: string): Promise<ProductData | nul
   const { prisma } = await import("@/lib/prisma");
   const { catalogWhere } = await import("@/lib/catalog-visibility");
   const { toProductData } = await import("@/lib/catalog");
+  const { applyInstagramProductFallback } = await import("@/lib/instagram-media.server");
 
   const item = await prisma.instrument.findFirst({
     where: { id, ...catalogWhere },
   });
 
-  return item ? toProductData(item) : null;
+  if (!item) return null;
+  const product = toProductData(item);
+  return applyInstagramProductFallback(product, product.ig);
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CatalogGrid } from "@/components/catalog/CatalogGrid";
 import { toCatalogItems } from "@/lib/catalog";
 import { catalogWhere } from "@/lib/catalog-visibility";
+import { applyInstagramImageFallback } from "@/lib/instagram-media.server";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -37,7 +38,13 @@ export default async function AdminCatalogPreviewPage() {
         </p>
       </header>
 
-      <CatalogGrid items={toCatalogItems(items)} basePath="/equipo" />
+      <CatalogGrid
+        items={await applyInstagramImageFallback(
+          toCatalogItems(items),
+          items.map((item) => item.ig),
+        )}
+        basePath="/equipo"
+      />
     </div>
   );
 }

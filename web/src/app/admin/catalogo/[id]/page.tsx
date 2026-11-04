@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CatalogProduct } from "@/components/catalog/CatalogProduct";
 import { toProductData } from "@/lib/catalog";
 import { catalogWhere } from "@/lib/catalog-visibility";
+import { applyInstagramProductFallback } from "@/lib/instagram-media.server";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
@@ -16,6 +17,9 @@ export default async function AdminCatalogProductPreviewPage({ params }: Props) 
   });
   if (!product) notFound();
 
+  const data = toProductData(product);
+  const withPhoto = await applyInstagramProductFallback(data, data.ig);
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#1c1c1c] bg-[#111] px-4 py-3 text-sm">
@@ -29,7 +33,7 @@ export default async function AdminCatalogProductPreviewPage({ params }: Props) 
           Abrir en sitio público →
         </a>
       </div>
-      <CatalogProduct product={toProductData(product)} catalogBasePath="/" />
+      <CatalogProduct product={withPhoto} catalogBasePath="/" />
     </div>
   );
 }
